@@ -19,6 +19,7 @@ class LoginController extends Controller
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Hash;
@@ -30,20 +31,18 @@ class LoginController extends Controller
         return view('pages.login');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'], 
-        ]);
 
-        if (Auth::attempt($credentials))
+        $validated=$request->validated();
+
+        if  (Auth::attempt($validated))
         {
-            return view('home.index');
+
+          return redirect()->route('home')->with('success', 'Login was successful');
+        } else {
+          return redirect()->route('login')->with('error', 'Credentials were wrong');
         }
-
-        return "<h2>Username or Password Invalid</h2>";
-    }
+            
 }
-
-?>
+}

@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 
 
 /*
@@ -32,13 +33,17 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-Route::get('/login', [LoginController::class, 'index']);  
+Route::get('/login', [LoginController::class, 'login']);  
 
 Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-Route::get('/home', [HomeController::class, 'dashboard']);
+Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
+
+Route::get('/edit', [ProfileController::class, 'create'])->name('edit');
+
+Route::put('profile/update', [ProfileController::class,'update'])->name('update');
 
 
 

@@ -1,35 +1,8 @@
 <?php
-/*
-namespace App\Http\Controllers;
-
-
-use App\Models\User;
-use Hash;
-use Illuminate\Http\Request;
-
-class RegisterController extends Controller
-{
-
-    
-    public function register(Request $request)
-    {
-        User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
-
-        return redirect()->route('login')->with('success', 'User registered');
-    }
-
-
-}
-*/
-?>
-<?php
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -41,16 +14,25 @@ class RegisterController extends Controller
         return view('pages.register');
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $input = $request->all();
+
+
+        $validated=$request->validated(); 
 
         User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password'])
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password'])
         ]);
-        return view('home.index');
+
+        if  (Auth::attempt($validated))
+        {
+
+          return redirect()->route('home')->with('success', 'Register was successful');
+        } else {
+          return redirect()->route('register')->with('error', 'Credentials were wrong');
+        }
     }
 }
 
