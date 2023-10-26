@@ -18,10 +18,8 @@ class ProfileController extends Controller
  
         public function update(ProfileUpdateRequest $request)
         {
-        auth()->user()->update([
-        'name' -> $request->name,
-        'email' -> $request->email
-        ]);
+            auth()->user()->update($request->validated());
+          
         
                 return redirect()->route('home')->with('success', 'Update was successful');
         }

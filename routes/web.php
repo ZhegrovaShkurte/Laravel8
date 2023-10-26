@@ -33,17 +33,20 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-Route::get('/login', [LoginController::class, 'login']);  
+Route::get('/login', [LoginController::class, 'login']);
 
 Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
+Route::get('/home', [HomeController::class, 'dashboard'])->name('home')->middleware('loggedmiddleware');
 
-Route::get('/edit', [ProfileController::class, 'create'])->name('edit');
+Route::middleware($loginmiddleware)->group(function () {
+    Route::get('/edit', function () {
+        return 'Edit';
+    });
+    Route::put('profile/update', function () {
+        return 'Profile/update';
+    });
 
-Route::put('profile/update', [ProfileController::class,'update'])->name('update');
-
-
-
+});
