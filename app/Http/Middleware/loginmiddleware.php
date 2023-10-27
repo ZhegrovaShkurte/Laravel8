@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class loginmiddleware
+class LoginMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class loginmiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()) {
-            return redirect('home');
+        if (!(auth()->user())) {
+            return redirect('/');
             } 
 
         return $next($request);

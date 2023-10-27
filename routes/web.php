@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 Route::get('/', [LoginController::class, 'index']);
 
-Route:: get('register', [RegisterController::class, 'create']);
+Route::get('register', [RegisterController::class, 'create']);
 
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
@@ -39,14 +39,10 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-Route::get('/home', [HomeController::class, 'dashboard'])->name('home')->middleware('loggedmiddleware');
 
-Route::middleware($loginmiddleware)->group(function () {
-    Route::get('/edit', function () {
-        return 'Edit';
-    });
-    Route::put('profile/update', function () {
-        return 'Profile/update';
-    });
 
+Route::middleware('loginmiddleware')->group(function () { 
+    Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
+    Route::get('edit', [ProfileController::class, 'create'])->name('edit');
+    Route::put('profile/update', [ProfileController::class, 'update'])->name('update');
 });

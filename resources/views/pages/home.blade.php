@@ -7,7 +7,7 @@
                 <b>Home Page...</b>
                 <div class="row mb-0">
                     <div class="col-md-6">
-                <a href="/edit" class="btn btn-success">Edit</a>
+                <a href="{{ route('edit') }}" class="btn btn-success">Edit</a>
                     </div>
                 </div>
                 </div>
