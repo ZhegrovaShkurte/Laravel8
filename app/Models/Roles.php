@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Roles extends Model
 {
     use HasFactory;
 
-    public function user(): BelongsTo
+    public function user(): HasMany
 {
-    return $this->belongsTo(User::class, 'foreign_key');
+    return $this->hasMany(User::class);
 }
 }

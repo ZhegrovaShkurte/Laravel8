@@ -6,6 +6,8 @@
     <th>ID</th>
     <th>Name</th>
     <th>Email</th>
+    <th>Phone</th>
+
     
   </tr>
   <tbody>
@@ -14,6 +16,7 @@
     <td>{{ $item->id }}</td>
     <td>{{ $item->name }}</td>
     <td>{{ $item->email }}</td>
+    <td>{{ $item->phone }}</td>
    
   </tr>
   @endforeach
