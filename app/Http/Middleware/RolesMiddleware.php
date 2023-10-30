@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
 
-class LoginMiddleware
+class RolesMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,11 +17,11 @@ class LoginMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!(auth()->user())) {
-            return redirect('/');
-            } 
 
-        return $next($request);
-    }
+        if(Auth::user()->role == '1') {
+            return $next($request);
+        } else {
+            return redirect('/home')->with('message', 'You are not User');
+        }
 
-}
+}};
