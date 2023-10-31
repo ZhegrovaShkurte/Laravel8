@@ -9,6 +9,7 @@
     <th>Name</th>
     <th>Email</th>
     <th>Phone</th>
+    <th>RoleId</th>
 
     
   </tr>
@@ -19,6 +20,7 @@
     <td>{{ $item->name }}</td>
     <td>{{ $item->email }}</td>
     <td>{{ $item->phone }}</td>
+    <td>{{ $item->roleid }}</td>
    
   </tr>
   @endforeach
