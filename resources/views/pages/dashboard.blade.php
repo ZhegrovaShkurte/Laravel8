@@ -1,6 +1,8 @@
 @extends('home\db')
 @section('db')
 
+<h1>Admin Dashboard</h1>
+
 <table class="table">
   <tr>
     <th>ID</th>

@@ -12,5 +12,5 @@ class DashboardController extends Controller
         $data=User::all();
         return view('pages.dashboard',['user'=>$data]);
     }
-    
+     
 }

@@ -21,8 +21,12 @@ class LoginController extends Controller
 
         if  (Auth::attempt($validated))
         {
-
-          return redirect()->route('home')->with('success', 'Login was successful');
+            if(auth()->user()->roleid==1){
+               return redirect()->route('dashboard');
+            }else{
+                return redirect()->route('home');
+            }
+         // return redirect()->route('home')->with('success', 'Login was successful');
         } else {
           return redirect()->route('login')->with('error', 'Credentials were wrong');
         }

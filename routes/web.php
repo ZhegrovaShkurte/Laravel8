@@ -31,12 +31,14 @@ Route::get('logout', [LogoutController::class, 'logout']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('adminmiddleware');
+
 
 Route::middleware('loginmiddleware')->group(function () { 
     Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
     Route::get('edit', [ProfileController::class, 'create'])->name('edit');
     Route::put('profile/update', [ProfileController::class, 'update'])->name('update');
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+  //  Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 });
 
 

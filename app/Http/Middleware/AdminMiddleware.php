@@ -16,11 +16,13 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->roleid(1)) {
+        if (auth()->user()->roleid == 1) {
             return $next($request);
         }
     
-        return redirect('/home');
+        return redirect('dashboard')->with('error', 'You have no admin access');
 
     }
 }
+
+//   if (auth()->check() && auth()->user()->roleid(1))
