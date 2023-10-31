@@ -20,9 +20,7 @@ class AdminMiddleware
             return $next($request);
         }
     
-        return redirect('dashboard')->with('error', 'You have no admin access');
+        return redirect('home')->with('error', 'You have no admin access');
 
     }
 }
-
-//   if (auth()->check() && auth()->user()->roleid(1))

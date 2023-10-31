@@ -22,30 +22,28 @@ use App\Http\Controllers\DashboardController;
 
 */
 
-
-Route::post('/register', [RegisterController::class, 'register'])->name('register');
-
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-
-Route::get('logout', [LogoutController::class, 'logout']);
-
-Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+Route::match(['get', 'post'], 'logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('adminmiddleware');
 
+Route::middleware('loginmiddleware')->group(function () {
+  Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
 
-Route::middleware('loginmiddleware')->group(function () { 
-    Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
-    Route::get('edit', [ProfileController::class, 'create'])->name('edit');
-    Route::put('profile/update', [ProfileController::class, 'update'])->name('update');
-  //  Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+  Route::get('edit', [ProfileController::class, 'create'])->name('edit');
+  Route::get('logout', [LogoutController::class, 'logout']);
+
+  Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+  Route::put('profile/update', [ProfileController::class, 'update'])->name('update');
 });
-
 
 Route::middleware('checkloginmiddleware')->group(function () {
-    Route::get('register', [RegisterController::class, 'create']);
-    Route::get('/', [LoginController::class, 'index']);
-    Route::get('/login', [LoginController::class, 'login']);
+  Route::match(['get', 'post'], 'register', [RegisterController::class, 'create'])->name('register');
+
+  Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');
+
+  Route::get('/', [LoginController::class, 'index']);
+
+
 });
 
-//  Route::group(['prefix' => 'users'], function() {

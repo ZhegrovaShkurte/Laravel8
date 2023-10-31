@@ -9,10 +9,10 @@ use Session;
 
 class LogoutController extends Controller
 {
-    public function logout()
+   public function logout()
    {
       Session::flush();
       Auth::logout();
-     return redirect('login');
+      return redirect('login');
    }
-} 
+}

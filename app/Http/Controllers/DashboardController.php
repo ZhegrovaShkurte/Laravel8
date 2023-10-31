@@ -9,8 +9,8 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $data=User::all();
-        return view('pages.dashboard',['user'=>$data]);
+        $users=User::all();
+        return view('pages.dashboard',['users'=>$users]);
     }
      
 }
