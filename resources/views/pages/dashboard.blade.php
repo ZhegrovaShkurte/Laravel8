@@ -1,7 +1,7 @@
 @extends('home\db')
 @section('db')
 
-<h1>Admin Dashboard</h1>
+<h6>Data related to user and admin</h6>
 
 <table class="table">
   <tr>
@@ -9,7 +9,7 @@
     <th>Name</th>
     <th>Email</th>
     <th>Phone</th>
-    <th>RoleId</th>
+    <th>Role_Id</th>
 
     
   </tr>
@@ -20,7 +20,7 @@
     <td>{{ $user->name }}</td>
     <td>{{ $user->email }}</td>
     <td>{{ $user->phone }}</td>
-    <td>{{ $user->roleid }}</td>
+    <td>{{ $user->role_id }}</td>
    
   </tr>
   @endforeach

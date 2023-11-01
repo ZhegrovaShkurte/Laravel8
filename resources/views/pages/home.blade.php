@@ -9,6 +9,7 @@
                     <div class="col-md-6">
                 <a href="{{ route('edit') }}" class="btn btn-success">Edit</a>
                     </div>
+                   
                 </div>
                 </div>
     </div>

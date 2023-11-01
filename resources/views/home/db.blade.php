@@ -28,7 +28,7 @@
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="{{ route('login')}}">{{ __('Login')}}</a>
+                    <a class="nav-link" href="{{ route('logout')}}">{{ __('Logout')}}</a>
                 </li>
             </ul>
          </nav>
@@ -37,10 +37,10 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.html">
+                            <div class="sb-sidenav-menu-heading">Pages</div>
+                            <a class="nav-link" href="{{ route('home') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
+                                Home
                             </a>       
                         </div>
                     </div>
@@ -49,7 +49,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h4 class="mt-4">Users</h4>
+                        <h4 class="mt-4">Admin Dashboard</h4>
 
 
                     </div>
