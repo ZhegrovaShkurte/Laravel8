@@ -22,21 +22,21 @@ use App\Http\Controllers\DashboardController;
 
 */
 
+Route::middleware(['guest'])->group(function () {
+  Route::get('register', [RegisterController::class, 'create']);
 
-Route::get('register', [RegisterController::class, 'create']);
+  Route::post('register', [RegisterController::class, 'register'])->name('register');
 
-Route::post('register', [RegisterController::class, 'register'])->name('register');
+  Route::get('/login', [LoginController::class, 'index']);
 
-Route::get('/login', [LoginController::class, 'index']);
-
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-
+  Route::post('/login', [LoginController::class, 'login'])->name('login');
+});
 
 Route::middleware(['usermiddleware'])->group(function () {
 
   Route::get('/', [HomeController::class, 'dashboard'])->name('home');
 
-  Route::get('edit', [ProfileController::class, 'create'])->name('edit');
+  Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
 
   Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
 
