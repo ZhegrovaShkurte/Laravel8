@@ -7,6 +7,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -32,24 +33,39 @@ Route::middleware(['guest'])->group(function () {
   Route::post('/login', [LoginController::class, 'login'])->name('login');
 });
 
-Route::middleware(['usermiddleware'])->group(function () {
-
-  Route::get('/', [HomeController::class, 'dashboard'])->name('home');
-
-  Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
-
-  Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
-
+Route::middleware(['auth'])->group(function () {
   Route::match(['get', 'post'], 'logout', [LogoutController::class, 'logout'])->name('logout');
-
-  Route::put('profile/update', [ProfileController::class, 'update'])->name('update');
 
   Route::middleware('adminmiddleware')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('addUser',[UserController::class,'addUser'])->name('addUser');
+
+    Route::put('save-user', [UserController::class, 'saveUser'])->name('save-user');
+
+    Route::get('edit-user/{id}', [UserController::class, 'editUser'])->name('editUser');
+
+    Route::put('update-user', [UserController::class, 'updateUser'])->name('update-user');
+
+    Route::get('delete-user/{id}', [UserController::class, 'deleteUser'])->name('deleteUser');
+   
+  
   });
 
+  Route::middleware(['usermiddleware'])->group(function () {
+
+    Route::get('/', [HomeController::class, 'dashboard'])->name('home');
+
+    Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
+
+    Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
+
+    Route::put('profile/update', [ProfileController::class, 'update'])->name('update');
+
+  });
 });
+
 
 
 
