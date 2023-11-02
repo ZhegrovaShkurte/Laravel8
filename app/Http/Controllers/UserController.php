@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateUserRequest;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\SaveUserRequest;
+use Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -18,6 +18,7 @@ class UserController extends Controller
 
     public function saveUser(Request $request)
     {
+
         $name = $request->name;
         $email = $request->email;
         $phone = $request->phone;
@@ -27,7 +28,7 @@ class UserController extends Controller
         $user->name = $name;
         $user->email = $email;
         $user->phone = $phone;
-        $user->password = $password;
+        $user->password = Hash::make($password);
         $user->role_id = 2;
         $user->save();
 
@@ -36,7 +37,6 @@ class UserController extends Controller
     public function editUser($id)
     {
         $users = User::where('id', '=', $id)->first();
-
         return view('admin.update', compact('users'));
 
     }
@@ -47,6 +47,7 @@ class UserController extends Controller
             'email' => 'required|email',
             'phone' => 'required',
         ]);
+
         $id = $request->id;
         $name = $request->name;
         $email = $request->email;
@@ -56,21 +57,15 @@ class UserController extends Controller
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
+
         ]);
         return redirect()->route('dashboard')->with('success', 'User Updated Successfully');
-
     }
-
 
     public function deleteUser($id)
     {
         User::where('id', '=', $id)->delete();
         return redirect()->route('dashboard')->with('success', 'User Deleted Successfully');
-
-
     }
-
-
-
 }
 
