@@ -14,15 +14,15 @@
                         {{Session::get('success')}}
                     </div>
                     @endif
-                    <form method="POST" action="{{ route('update-user') }}">
+                    <form method="POST" action="{{ route('users.update',$user->id) }}">
                         @csrf
-                        <input type="hidden" name="id" value="{{$users->id}}">
+                        <input type="hidden" name="id" value="{{$user->id}}">
                         @method('PUT')
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input name="name" type="text" value="{{$users->name}}"/>
+                                <input name="name" type="text" value="{{$user->name}}"/>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -35,7 +35,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
-                                <input name="email" type="email" value="{{$users->email}}"/>
+                                <input name="email" type="email" value="{{$user->email}}"/>
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -48,7 +48,7 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-end">{{ __('Phone') }}</label>
 
                         <div class="col-md-6">
-                            <input name="phone" type="number" value="{{$users->phone}}"/>
+                            <input name="phone" type="number" value="{{$user->phone}}"/>
                             @error('phone')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

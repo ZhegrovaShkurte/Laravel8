@@ -8,7 +8,7 @@
   {{Session::get('success')}}
 </div>
 @endif
-<a href="{{ route('addUser') }}"class="btn btn-primary btn-sm">Add User</a>
+<a href="{{ route('create') }}"class="btn btn-primary btn-sm">Add User</a>
 <br>
 <br>
 <table class="table">
@@ -29,8 +29,8 @@
     <td>{{ $user->email }}</td>
     <td>{{ $user->phone }}</td>
     <td><div class="col-md-6">
-    <a href="{{ route('editUser', ['id' => $user->id]) }}"class="btn btn-primary btn-sm">Edit</a>
-      <a href="{{ route('deleteUser', ['id' => $user->id]) }}" class="btn btn-danger btn-sm">Delete</a>
+    <a href="{{ route('users.edit',$user->id) }}"class="btn btn-primary btn-sm">Edit</a>
+      <a href="{{ route('users.destroy',$user->id) }}" class="btn btn-danger btn-sm">Delete</a>
           </div>
           </td> 
         </tbody>

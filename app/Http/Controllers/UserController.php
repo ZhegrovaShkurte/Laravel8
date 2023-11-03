@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -10,61 +11,49 @@ use App\Models\User;
 class UserController extends Controller
 {
 
-    public function addUser()
+    public function create()
     {
 
         return view('admin.add');
     }
 
-    public function saveUser(Request $request)
+    public function store(SaveUserRequest $request)
     {
 
-        $name = $request->name;
-        $email = $request->email;
-        $phone = $request->phone;
-        $password = $request->password;
+        $validated = $request->validated();
 
-        $user = new User();
-        $user->name = $name;
-        $user->email = $email;
-        $user->phone = $phone;
-        $user->password = Hash::make($password);
-        $user->role_id = 2;
-        $user->save();
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'password' => Hash::make($validated['password']),
+            'role_id' => 2
+        ]);
 
         return redirect()->route('dashboard')->with('success', 'User Added Successfully');
     }
-    public function editUser($id)
+
+    public function edit(User $user)
     {
-        $users = User::where('id', '=', $id)->first();
-        return view('admin.update', compact('users'));
+        return view('admin.update', compact('user'));
 
     }
-    public function updateUser(Request $request)
+
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-        ]);
+        $validated = $request->validated();
 
-        $id = $request->id;
-        $name = $request->name;
-        $email = $request->email;
-        $phone = $request->phone;
-
-        User::where('id', '=', $id)->update([
-            'name' => $name,
-            'email' => $email,
-            'phone' => $phone,
-
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone']
         ]);
         return redirect()->route('dashboard')->with('success', 'User Updated Successfully');
     }
 
-    public function deleteUser($id)
+    public function destroy(User $user)
     {
-        User::where('id', '=', $id)->delete();
+        $user->delete();
         return redirect()->route('dashboard')->with('success', 'User Deleted Successfully');
     }
 }

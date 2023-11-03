@@ -14,9 +14,8 @@
                         {{Session::get('success')}}
                     </div>
                     @endif
-                    <form method="POST" action="{{ route('save-user') }}">
+                    <form method="POST" action="{{ route('store') }}">
                         @csrf
-                        @method('PUT')
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 

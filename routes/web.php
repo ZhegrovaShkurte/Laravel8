@@ -40,15 +40,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('addUser',[UserController::class,'addUser'])->name('addUser');
+    Route::get('create',[UserController::class,'create'])->name('create');
 
-    Route::put('save-user', [UserController::class, 'saveUser'])->name('save-user');
+    Route::post('store', [UserController::class, 'store'])->name('store');
 
-    Route::get('edit-user/{id}', [UserController::class, 'editUser'])->name('editUser');
+    Route::get('edit-user/{user}', [UserController::class, 'edit'])->name('users.edit');
 
-    Route::put('update-user', [UserController::class, 'updateUser'])->name('update-user');
+    Route::put('update-user/{user}', [UserController::class, 'update'])->name('users.update');
 
-    Route::get('delete-user/{id}', [UserController::class, 'deleteUser'])->name('deleteUser');
+    Route::get('destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
    
   
   });
