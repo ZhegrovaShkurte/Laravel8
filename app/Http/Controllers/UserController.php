@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Media;
 
 class UserController extends Controller
 {
@@ -19,17 +20,31 @@ class UserController extends Controller
 
     public function store(SaveUserRequest $request)
     {
-
         $validated = $request->validated();
 
-        User::create([
+
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
+            'image' => $validated['image'],
             'password' => Hash::make($validated['password']),
             'role_id' => 2
         ]);
 
+        $file = $request->file('image');
+
+        \Storage::disk('public')->put('images', $request->file('image'));
+
+        Media::create([
+            'hash_name' => $file->hashName(),
+            'size' => $file->getSize(),
+            'original_name' => $file->getClientOriginalName(),
+            'user_id' => $user->id,
+            'path' => 'storage/images/' . $file->hashName(),
+            'extension' => $file->getClientOriginalExtension(),
+
+        ]);
         return redirect()->route('dashboard')->with('success', 'User Added Successfully');
     }
 
@@ -41,6 +56,7 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
+
         $validated = $request->validated();
 
         $user->update([
@@ -48,6 +64,7 @@ class UserController extends Controller
             'email' => $validated['email'],
             'phone' => $validated['phone']
         ]);
+
         return redirect()->route('dashboard')->with('success', 'User Updated Successfully');
     }
 

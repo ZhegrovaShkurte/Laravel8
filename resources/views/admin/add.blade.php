@@ -14,7 +14,7 @@
                         {{Session::get('success')}}
                     </div>
                     @endif
-                    <form method="POST" action="{{ route('store') }}">
+                    <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
@@ -54,7 +54,19 @@
                         @enderror
                         </div>
                     </div>
+                  <div class="row mb-3">
+                        <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Profile Image') }}</label>
 
+                        <div class="col-md-6">
+                            <input name="image" type="file"  />
+                            
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        </div>
+                      </div>  
 
                    <div class="row mb-3">
                         <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
@@ -68,6 +80,10 @@
                         @enderror
                         </div>
                       </div>
+
+                   
+
+                      
 
                     <div class="row mb-0">
                         <div class="col-md-6 offset-md-4">

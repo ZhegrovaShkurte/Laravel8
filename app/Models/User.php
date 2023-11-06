@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'image',
         'role_id',
         
     ];
@@ -49,4 +50,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Role::class);
     }
+
+    public function medias()
+    {
+        return $this->hasMany(Media::class);
+    }
+
+
 }

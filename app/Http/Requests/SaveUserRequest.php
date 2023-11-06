@@ -27,7 +27,8 @@ class SaveUserRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required|min:6',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'image' => 'required|image|mimes:jpeg,png,jpg',
         ];
     }
 }
