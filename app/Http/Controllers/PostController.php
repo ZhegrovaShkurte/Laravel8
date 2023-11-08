@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Http\Request;
+use App\Http\Requests\SavePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostController extends Controller
@@ -14,10 +16,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        
-        return view('blog.index')
-        ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
+    {
+
+        return view('blog.index')->with('posts', Post::orderBy('updated_at', 'DESC')->get());
     }
 
     /**
@@ -36,15 +37,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SavePostRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'image' => 'required|mimes:jpg,png,jpeg'
-        ]);
 
-        $newImageName = uniqid() . '-' . $request->title . '-' . 
+        $newImageName = uniqid() . '-' . $request->title . '.' .
         $request->image->extension();
 
         $request->image->move(public_path('images'), $newImageName);
@@ -60,6 +56,7 @@ class PostController extends Controller
         ]);
 
         return redirect('/posts')->with('message', 'Your post has been added! ');
+
     }
 
     /**
@@ -70,8 +67,7 @@ class PostController extends Controller
      */
     public function show($slug)
     {
-          return view('blog.show')
-          ->with('post', Post::where('slug', $slug)->first());
+        return view('blog.show')->with('post', Post::where('slug', $slug)->first());
     }
 
     /**
@@ -82,8 +78,7 @@ class PostController extends Controller
      */
     public function edit($slug)
     {
-        return view('blog.edit')
-        ->with('post', Post::where('slug', $slug)->first());
+        return view('blog.edit')->with('post', Post::where('slug', $slug)->first());
     }
 
     /**
@@ -93,21 +88,16 @@ class PostController extends Controller
      * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(UpdatePostRequest $request, $slug)
     {
-
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
 
         Post::where('slug', $slug)->update
         ([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-            'user_id' => auth()->user()->id
-        ]);
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
+                'user_id' => auth()->user()->id
+            ]);
 
         return redirect('/posts')->with('message', 'Your post has been updated');
     }
@@ -120,9 +110,10 @@ class PostController extends Controller
      */
     public function destroy($slug)
     {
+
         $post = Post::where('slug', $slug);
         $post->delete();
-          
+
         return redirect('/posts')->with('message', 'Your post has been deleted');
 
     }
