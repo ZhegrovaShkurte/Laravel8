@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
@@ -34,23 +35,24 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+
   Route::match(['get', 'post'], 'logout', [LogoutController::class, 'logout'])->name('logout');
 
   Route::middleware('adminmiddleware')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('users.create',[UserController::class,'create'])->name('create');
+    Route::get('users/create', [UserController::class, 'create'])->name('create');
 
-    Route::post('users.store', [UserController::class, 'store'])->name('store');
+    Route::post('users/store', [UserController::class, 'store'])->name('store');
 
-    Route::get('users.edit/{user}', [UserController::class, 'edit'])->name('users.edit');
+    Route::get('users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
 
-    Route::put('update.user/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::put('update/user/{user}', [UserController::class, 'update'])->name('users.update');
 
-    Route::get('update.destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-   
-  
+    Route::get('update/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+  });
   });
 
   Route::middleware(['usermiddleware'])->group(function () {
@@ -61,11 +63,19 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
 
-    Route::put('profile/update', [ProfileController::class, 'update'])->name('update');
+    Route::put('update/profile', [ProfileController::class, 'update'])->name('update.profile');
 
-  });
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+
+    Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+
+    Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
-
-
-
-

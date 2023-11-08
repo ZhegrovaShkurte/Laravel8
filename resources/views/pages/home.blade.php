@@ -9,6 +9,11 @@
                     <div class="col-md-6">
                 <a href="{{ route('edit') }}" class="btn btn-success">Edit</a>
                     </div>
+                     <br><br>
+                    <div class="row mb-0">
+                        <div class="col-md-6">
+                    <a href="{{ route('posts.index') }}" class="btn btn-primary">Posts</a>
+                        </div>
                    
                 </div>
                 </div>

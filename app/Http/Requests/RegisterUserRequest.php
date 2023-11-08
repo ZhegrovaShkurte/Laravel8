@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
-class ProfileUpdateRequest extends FormRequest
+class RegisterUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +25,10 @@ class ProfileUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required', 
-            'phone' => 'required',
-            'email' => 'required|email', 
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|min:6',
+            'password' => 'required|min:6'
         ];
     }
 }

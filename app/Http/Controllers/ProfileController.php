@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileRequest;
-use App\Http\Requests\ProfileUpdateRequest;
+
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -15,12 +15,14 @@ class ProfileController extends Controller
         return view('profile.edit');
     }
 
- 
-        public function update(ProfileUpdateRequest $request)
-        {
+
+    public function update(UpdateProfileRequest $request)
+    {
+        try {
             auth()->user()->update($request->validated());
-          
-        
-                return redirect()->route('home')->with('success', 'Update was successful');
+        } catch (\Exception $exception) {
+            return back()->with('error', $exception->getMessage());
         }
+        return redirect()->route('home')->with('success', 'Update was successful');
     }
+}

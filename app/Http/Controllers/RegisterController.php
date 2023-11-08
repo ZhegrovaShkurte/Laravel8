@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\RegisterUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -15,23 +15,28 @@ class RegisterController extends Controller
     return view('pages.register');
   }
 
-  public function register(RegisterRequest $request)
+  public function register(RegisterUserRequest $request)
   {
-    $validated = $request->validated();
+    try {
+      $validated = $request->validated();
 
-    User::create([
-      'name' => $validated['name'],
-      'email' => $validated['email'],
-      'phone' => $validated['phone'],
-      'password' => Hash::make($validated['password']),
-      'role_id' => 2
-    ]);
-
-    if (Auth::attempt($validated)) {
-      return redirect()->route('home')->with('success', 'Register was successful');
-    } else {
-      return redirect()->route('register')->with('error', 'Credentials were wrong');
+      User::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'phone' => $validated['phone'],
+        'password' => Hash::make($validated['password']),
+        'role_id' => 2
+      ]);
+  
+      if (Auth::attempt($validated)) {
+        return redirect()->route('home')->with('success', 'Register was successful');
+      } else {
+        return redirect()->route('register')->with('error', 'Credentials were wrong');
+      }
+    }  catch(\Exception $exception) {
+      return back()->with('error', $exception->getMessage());
     }
+      
   }
 }
 
