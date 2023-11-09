@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use App\Http\Requests\SavePostRequest;
 use App\Http\Requests\UpdatePostRequest;
@@ -40,19 +41,30 @@ class PostController extends Controller
     public function store(SavePostRequest $request)
     {
 
-        $newImageName = uniqid() . '-' . $request->title . '.' .
-        $request->image->extension();
 
-        $request->image->move(public_path('images'), $newImageName);
-
+        $file = $request->file('image');
+    
+        \Storage::disk('public')->put('images', $request->file('image'));
+    
         $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
 
-        Post::create([
+        $post = Post::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
-            'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-            'image_path' => $newImageName,
+            'slug' => $slug,
             'user_id' => auth()->user()->id
+            
+        ]);
+
+        Media::create([
+            'hash_name' => $file->hashName(),
+            'size' => $file->getSize(),
+            'original_name' => $file->getClientOriginalName(),
+            'user_id' => auth()->user()->id,
+            'path' => 'storage/images/' . $file->hashName(),
+            'extension' => $file->getClientOriginalExtension(),
+            'post_id' => $post->id,
+
         ]);
 
         return redirect('/posts')->with('message', 'Your post has been added! ');

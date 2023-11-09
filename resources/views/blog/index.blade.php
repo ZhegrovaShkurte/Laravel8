@@ -45,7 +45,7 @@
                            
                         </header>
                         <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="{{asset ('images/' . $post->image_path) }}" alt="" /></figure>
+                        <figure class="mb-4"><img class="img-fluid rounded" src="{{ asset( $post->medias()->first()?->path) }}" width="300px" alt="" /></figure>
                         <!-- Post content-->
                         <section class="mb-5">
                             <p class="fs-5 mb-4">{{ $post->description }}</p> 

@@ -32,4 +32,9 @@ class Post extends Model
             ]
            ];
     }
+
+    public function medias()
+    {
+        return $this->hasOne(Media::class);
+    }
 }
