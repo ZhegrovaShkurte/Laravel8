@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\SaveMedias;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ class Post extends Model
 {
     use HasFactory;
     use Sluggable;
+    use SaveMedias;
 
     protected $fillable = [
         'slug',
@@ -33,8 +35,13 @@ class Post extends Model
            ];
     }
 
-    public function medias()
+    public function media()
     {
         return $this->hasOne(Media::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

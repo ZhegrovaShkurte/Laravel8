@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Traits\SaveMedias;
 use Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -11,6 +12,7 @@ use App\Models\Media;
 
 class UserController extends Controller
 {
+     use SaveMedias;
 
     public function create()
     {
@@ -20,8 +22,8 @@ class UserController extends Controller
 
     public function store(SaveUserRequest $request)
     {
-        try {
-
+       try {
+    
         $validated = $request->validated();
 
             $user = User::create([
@@ -32,18 +34,6 @@ class UserController extends Controller
                 'role_id' => 2
             ]);
     
-            $file = $request->file('image');
-    
-            \Storage::disk('public')->put('images', $request->file('image'));
-    
-            Media::create([
-                'hash_name' => $file->hashName(),
-                'size' => $file->getSize(),
-                'original_name' => $file->getClientOriginalName(),
-                'user_id' => $user->id,
-                'path' => 'storage/images/' . $file->hashName(),
-                'extension' => $file->getClientOriginalExtension(),
-            ]);
     
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
