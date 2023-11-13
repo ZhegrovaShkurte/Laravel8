@@ -18,7 +18,7 @@ class Post extends Model
         'title',
         'description',
         'image_path',
-        'user_id',
+        'user_id'
     ];
 
     public function user()
@@ -43,5 +43,10 @@ class Post extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
     }
 }

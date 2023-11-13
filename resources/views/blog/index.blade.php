@@ -50,12 +50,12 @@
                         <section class="mb-5">
                             <p class="fs-5 mb-4">{{ $post->description }}</p> 
                         </section>
+                        
                         <a href="/posts/{{ $post->slug }}" class="btn btn-primary">Read More-></a>
 
                         @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
                         <span class="float-right">
                             <a href="/posts/{{ $post->slug }}/edit" class="btn btn-secondary">Edit</a>
-
                         </span>
                                           
                         <span class="float-right">
@@ -67,6 +67,7 @@
                                 <button class="btn btn-danger" type="submit">Delete</button>
                             </form>
                         </span>
+
                         @endif
                     </article>
                 </div>   

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
@@ -78,4 +79,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
 
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+    Route::post('/posts/comments', [CommentController::class, 'store'])->name('comments.store');
 });
