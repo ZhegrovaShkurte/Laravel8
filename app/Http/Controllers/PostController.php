@@ -46,6 +46,8 @@ class PostController extends Controller
     public function store(SavePostRequest $request)
     {
     
+        $file = $request->image;
+
         $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
 
         $post = Post::create([
@@ -55,6 +57,10 @@ class PostController extends Controller
             'user_id' => auth()->user()->id
             
         ]);
+
+        
+        $this->saveMedias($request, $file, $post->user_id, 'post', $post->id);
+
 
         return redirect('/posts')->with('message', 'Your post has been added! ');
 

@@ -28,7 +28,7 @@
     <td>{{ $user->name }}</td>
     <td>{{ $user->email }}</td>
     <td>{{ $user->phone }}</td>
-     <td><img src="{{ asset( $user->medias()->first()?->path) }}" width="100px"></td> 
+     <td><img src="{{ asset( $user->medias()->where('type','profile')->first()?->path) }}" width="100px"></td> 
     <td><div class="col-md-6">
     <a href="{{ route('users.edit',$user->id) }}"class="btn btn-primary btn-sm">Edit</a>
       <a href="{{ route('users.destroy',$user->id) }}" class="btn btn-danger btn-sm">Delete</a>

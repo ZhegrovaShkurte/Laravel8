@@ -20,7 +20,8 @@ class Media extends Model
     'hash_name',
     'user_id',
     'extension',
-    'post_id'
+    'post_id',
+    'type'
    ];
 
    public function user(): BelongsTo

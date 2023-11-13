@@ -2,24 +2,30 @@
 
 namespace App\Traits;
 use App\Models\Media;
-use App\Http\Requests\SaveUserRequest;
+use Illuminate\Support\Facades\Storage;
 
 trait SaveMedias
 {
-      public function saveMedias(SaveUserRequest $request, $file, $user)
+      public function saveMedias($request, $file, $userId, $type,$postId)
       {
-          $path = $file->store('images', 'public');
+        
+           if ($file !== null) {
+
+          $path = 'images/'. $file->hashName();
+
+          \Storage::disk('public')->put('images', $file);
 
           return Media::create([
             'hash_name' => $file->hashName(),
             'size' => $file->getSize(),
             'original_name' => $file->getClientOriginalName(),
-            'user_id' => $user->id,
+            'user_id' => $userId,
+            'post_id' => $postId,
             'path' => 'storage/' . $path,
             'extension' => $file->getClientOriginalExtension(),
+            'type' => $type,
           ]);
+
+        }
       }    
-      
-      }
-
-
+    }
