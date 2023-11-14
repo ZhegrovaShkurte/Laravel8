@@ -22,7 +22,13 @@ class PostController extends Controller
      */
     public function index()
     {
+        $post = Post::with('comments', 'comments.replies')->get();
+
+        foreach ($post->comments as $comment) {
+            echo $comment->replies->pluck('body');
          
+        }
+
         return view('blog.index')->with('posts', Post::orderBy('updated_at', 'DESC')->with('media', 'user')->get());
 
     }
@@ -45,7 +51,8 @@ class PostController extends Controller
      */
     public function store(SavePostRequest $request)
     {
-    
+        $posts = Post::with(['user', 'comments'])->get();
+
         $file = $request->image;
 
         $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
@@ -55,12 +62,10 @@ class PostController extends Controller
             'description' => $request->input('description'),
             'slug' => $slug,
             'user_id' => auth()->user()->id
-            
+
         ]);
 
-        
         $this->saveMedias($request, $file, $post->user_id, 'post', $post->id);
-
 
         return redirect('/posts')->with('message', 'Your post has been added! ');
 
@@ -76,7 +81,7 @@ class PostController extends Controller
     {
         return view('blog.show')->with('post', $post);
 
-        
+
     }
 
     /**
@@ -97,11 +102,11 @@ class PostController extends Controller
      * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePostRequest $request,Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
 
         $post->update
-           ([
+        ([
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
                 'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
