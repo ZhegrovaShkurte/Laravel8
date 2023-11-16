@@ -21,16 +21,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $post = Post::with('comments', 'comments.replies')->get();
-
-        foreach ($post->comments as $comment) {
-            echo $comment->replies->pluck('body');
-         
-        }
-
-        return view('blog.index')->with('posts', Post::orderBy('updated_at', 'DESC')->with('media', 'user')->get());
-
+    {       
+       // $posts = Post::all();
+         $posts = Post::latest()->with('comments', 'media', 'user', 'comments.replies')->get();
+        return view('blog.index', compact('posts'));
     }
 
     /**
@@ -51,9 +45,8 @@ class PostController extends Controller
      */
     public function store(SavePostRequest $request)
     {
-        $posts = Post::with(['user', 'comments'])->get();
-
-        $file = $request->image;
+       try { 
+         $file = $request->image;
 
         $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
 
@@ -62,13 +55,13 @@ class PostController extends Controller
             'description' => $request->input('description'),
             'slug' => $slug,
             'user_id' => auth()->user()->id
-
         ]);
 
         $this->saveMedias($request, $file, $post->user_id, 'post', $post->id);
-
+    } catch (\Exception $exception) {
+        return redirect()->back()->with('error', $exception->getMessage());
+    }
         return redirect('/posts')->with('message', 'Your post has been added! ');
-
     }
 
     /**
@@ -78,10 +71,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
-    {
+   {    
+       
+       $posts = Post::with('comments', 'media', 'user', 'comments.replies')->find($post->id);
         return view('blog.show')->with('post', $post);
-
-
     }
 
     /**
@@ -105,14 +98,13 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
 
-        $post->update
-        ([
+        $post->update([
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
                 'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
                 'user_id' => auth()->user()->id
             ]);
-
+        
         return redirect('/posts')->with('message', 'Your post has been updated');
     }
 
@@ -125,10 +117,8 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-
+        
         return redirect('/posts')->with('message', 'Your post has been deleted');
 
     }
-
-
 }

@@ -12,9 +12,8 @@
                      <br><br>
                     <div class="row mb-0">
                         <div class="col-md-6">
-                    <a href="{{ route('posts.index') }}" class="btn btn-primary">Posts</a>
-                        </div>
-                   
+                 <a href="{{ route('posts.index')}}" class="btn btn-primary">Posts</a> 
+                        </div>  
                 </div>
                 </div>
     </div>

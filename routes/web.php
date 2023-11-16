@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
@@ -21,8 +22,6 @@ use App\Http\Controllers\UserController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-
-
 */
 
 Route::middleware(['guest'])->group(function () {
@@ -52,6 +51,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('update/user/{user}', [UserController::class, 'update'])->name('users.update');
 
     Route::get('update/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    
+    Route::get('dashboard/post',[DashboardPostController::class, 'index'])->name('dashboard.posts');
 
   });
   });
@@ -81,4 +82,5 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
     Route::post('/posts/comments', [CommentController::class, 'store'])->name('comments.store');
+
 });

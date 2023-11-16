@@ -41,7 +41,11 @@
                             <a class="nav-link" href="{{ route('home') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Home
-                            </a>       
+                            </a>   
+                            <a class="nav-link" href="{{ route('dashboard.posts')}} ">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Posts
+                            </a>           
                         </div>
                     </div>
                 </nav>

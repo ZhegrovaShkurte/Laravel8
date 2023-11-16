@@ -47,14 +47,11 @@ class UserController extends Controller
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
-
-
         return redirect()->route('dashboard')->with('success', 'User Added Successfully');
     }
     public function edit(User $user)
     {
         return view('admin.update', compact('user'));
-
     }
 
     public function update(UpdateUserRequest $request, User $user)

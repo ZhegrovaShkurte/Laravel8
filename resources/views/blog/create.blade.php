@@ -13,8 +13,7 @@
       </ul>
     </div>
   @endif
-         
-
+      
     <section class="mt-3">
         <form method="POST" action="{{ route('posts.index') }}" enctype="multipart/form-data">
             @csrf

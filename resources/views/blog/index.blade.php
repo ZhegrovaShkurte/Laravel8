@@ -10,8 +10,6 @@
 
 @endif
 
-
-
 <header class="py-7 bg-light border-bottom">
     <div class="container">
         <div class="text-center">
@@ -53,6 +51,10 @@
                         
                         <a href="/posts/{{ $post->slug }}" class="btn btn-primary">Read More-></a>
 
+                           @php
+                             $userId = Auth::id();
+                             @endphp
+                             
                         @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
                         <span class="float-right">
                             <a href="/posts/{{ $post->slug }}/edit" class="btn btn-secondary">Edit</a>
@@ -73,7 +75,6 @@
                 </div>   
         </div>
 @endforeach
-
     </body>
 </html>
  @endsection

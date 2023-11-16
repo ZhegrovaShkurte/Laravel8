@@ -14,7 +14,6 @@
     </div>
   @endif
          
-
     <section class="mt-3">
         <form method="POST" action="/posts/{{ $post->slug }}" enctype="multipart/form-data">
             @csrf
@@ -30,10 +29,4 @@
         </form>
     </section>
 </div>
-
-
-
-
-
-
 @endsection
