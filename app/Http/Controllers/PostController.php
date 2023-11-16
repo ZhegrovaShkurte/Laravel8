@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\Media;
 use App\Traits\SaveMedias;
@@ -21,9 +22,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {       
-       // $posts = Post::all();
-         $posts = Post::latest()->with('comments', 'media', 'user', 'comments.replies')->get();
+    {
+        // $posts = Post::all();
+        $posts = Post::latest()->with('comments', 'media', 'user', 'comments.replies')->get();
         return view('blog.index', compact('posts'));
     }
 
@@ -45,22 +46,22 @@ class PostController extends Controller
      */
     public function store(SavePostRequest $request)
     {
-       try { 
-         $file = $request->image;
+        try {
+            $file = $request->image;
 
-        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+            $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
 
-        $post = Post::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'slug' => $slug,
-            'user_id' => auth()->user()->id
-        ]);
+            $post = Post::create([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'slug' => $slug,
+                'user_id' => auth()->user()->id
+            ]);
 
-        $this->saveMedias($request, $file, $post->user_id, 'post', $post->id);
-    } catch (\Exception $exception) {
-        return redirect()->back()->with('error', $exception->getMessage());
-    }
+            $this->saveMedias($request, $file, $post->user_id, 'post', $post->id);
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
         return redirect('/posts')->with('message', 'Your post has been added! ');
     }
 
@@ -71,9 +72,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
-   {    
-       
-       $posts = Post::with('comments', 'media', 'user', 'comments.replies')->find($post->id);
+    {
+
+        $posts = Post::with('comments', 'media', 'user', 'comments.replies')->find($post->id);
         return view('blog.show')->with('post', $post);
     }
 
@@ -98,13 +99,16 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
 
-        $post->update([
+        try {
+            $post->update([
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
                 'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
                 'user_id' => auth()->user()->id
             ]);
-        
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
         return redirect('/posts')->with('message', 'Your post has been updated');
     }
 
@@ -117,8 +121,28 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        
+
         return redirect('/posts')->with('message', 'Your post has been deleted');
 
+    }
+
+    public function addlike(Request $request, $post_id)
+    {
+        try {
+            $userId = $request->user()->id;
+            $existingLike = Like::where('user_id', $userId)->where('post_id', $post_id)->first();
+
+            if ($existingLike) {
+                $existingLike->delete();
+            } else {
+                Like::create([
+                    'post_id' => $post_id,
+                    'user_id' => $userId,
+                ]);
+            }
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
+        return redirect()->back();
     }
 }

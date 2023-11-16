@@ -6,6 +6,7 @@ use App\Traits\SaveMedias;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Like;
 
 class Post extends Model
 {
@@ -49,5 +50,13 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class)->whereNull('parent_id');
 
+    }
+
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
+
+    public function isUserLike($user_id){
+        return $this->likes()->where('user_id', '=', $user_id)->exists();
     }
 }

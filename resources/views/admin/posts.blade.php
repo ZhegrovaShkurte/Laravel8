@@ -12,6 +12,7 @@
       <th>Description</th>
       <th>User</th>
       <th>Comments</th>
+      <th>Likes</th>
     </tr>
     <tbody>
         @foreach ($posts as $post)
@@ -21,6 +22,7 @@
         <td>{{ $post->description }}</td>
         <td>{{ $post->user->name }}</td>
         <td>{{ count($post->comments)}}</td>
+        <td>{{ count($post->likes)}}</td>
     </tbody>
 </tr>
 @endforeach
