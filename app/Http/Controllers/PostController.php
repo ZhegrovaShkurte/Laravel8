@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dislike;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Media;
@@ -10,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SavePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use App\Models\Comment;
+
 
 class PostController extends Controller
 {
@@ -23,7 +26,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        // $posts = Post::all();
         $posts = Post::latest()->with('comments', 'media', 'user', 'comments.replies')->get();
         return view('blog.index', compact('posts'));
     }
@@ -47,6 +49,7 @@ class PostController extends Controller
     public function store(SavePostRequest $request)
     {
         try {
+
             $file = $request->image;
 
             $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
@@ -75,7 +78,7 @@ class PostController extends Controller
     {
 
         $posts = Post::with('comments', 'media', 'user', 'comments.replies')->find($post->id);
-        return view('blog.show')->with('post', $post);
+        return view('blog.show')->with('post', $posts);
     }
 
     /**
@@ -98,7 +101,6 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-
         try {
             $post->update([
                 'title' => $request->input('title'),
@@ -123,26 +125,32 @@ class PostController extends Controller
         $post->delete();
 
         return redirect('/posts')->with('message', 'Your post has been deleted');
-
     }
 
-    public function addlike(Request $request, $post_id)
+    public function like(Request $request, $postId)
     {
-        try {
-            $userId = $request->user()->id;
-            $existingLike = Like::where('user_id', $userId)->where('post_id', $post_id)->first();
+        $userId = auth()->user()->id;
 
-            if ($existingLike) {
-                $existingLike->delete();
-            } else {
-                Like::create([
-                    'post_id' => $post_id,
-                    'user_id' => $userId,
-                ]);
-            }
-        } catch (\Exception $exception) {
-            return redirect()->back()->with('error', $exception->getMessage());
-        }
+        Like::create([
+            'post_id' => $postId,
+            'user_id' => $userId,
+            'reaction' => 'like',
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function dislike(Request $request, $postId)
+    {
+        $userId = auth()->user()->id;
+
+        Like::create([
+            'post_id' => $postId,
+            'user_id' => $userId,
+            'reaction' => 'dislike',
+        ]);
+
         return redirect()->back();
     }
 }
+

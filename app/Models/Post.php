@@ -56,7 +56,11 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
-    public function isUserLike($user_id){
-        return $this->likes()->where('user_id', '=', $user_id)->exists();
+    public function isUserReaction($user_id, $reaction)
+    {
+        return $this->likes()->where('user_id', $user_id)->where('reaction', $reaction)->exists();
     }
+
+    
+
 }

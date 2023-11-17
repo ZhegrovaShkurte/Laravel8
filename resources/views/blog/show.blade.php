@@ -18,7 +18,7 @@
 <h4 class="fw-bolder"> Display Comments </h4>
 
 @include('blog.comments', ['comments' => $post->comments, 'post_id' => $post->id])
- {{count($post->comments)}}
+
 <hr />
 <h4>Add comment</h4>
 <form method="post" action="{{ route('comments.store') }}">

@@ -13,19 +13,20 @@
       <th>User</th>
       <th>Comments</th>
       <th>Likes</th>
+      <th>Dislikes</th>
     </tr>
     <tbody>
         @foreach ($posts as $post)
-        @foreach ($post->comments as $comment)
       <tr>
         <td>{{ $post->title}}</td>
         <td>{{ $post->description }}</td>
         <td>{{ $post->user->name }}</td>
-        <td>{{ count($post->comments)}}</td>
-        <td>{{ count($post->likes)}}</td>
+        <td>{{ $post->comments_count }}</td>
+        <td>{{ $post->likes->where('reaction', 'like')->count() }}</td>
+        <td>{{ $post->likes->where('reaction', 'dislike')->count() }}</td>
     </tbody>
 </tr>
-@endforeach
+
 @endforeach
 </table>
 

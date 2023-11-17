@@ -83,6 +83,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/posts/comments', [CommentController::class, 'store'])->name('comments.store');
 
-    Route::get('/like/{post}', [PostController::class, 'addlike'])->name('posts.like');
+    Route::post('/like/{postId}', [PostController::class, 'like']);
 
+    Route::post('/dislike/{postId}', [PostController::class, 'dislike']);
+    
 });
