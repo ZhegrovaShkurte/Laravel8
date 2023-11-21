@@ -88,3 +88,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dislike/{postId}', [PostController::class, 'dislike']);
     
 });
+
+Route::group(['prefix' => '{locale}'], function () {
+  Route::get('/', [HomeController::class, 'dashboard'])->name('home')->middleware('setLocale');
+});
+

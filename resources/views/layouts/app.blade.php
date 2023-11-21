@@ -37,11 +37,10 @@
                     <ul class="navbar-nav ms-auto">
                         <div class="dropdown">
                             <button class="btn btn-secondary custom-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Change Language
+                              {{ app()->getLocale() == 'en'? 'English': 'Albanian' }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">English</a>
-                              <a class="dropdown-item" href="#">Albanian</a>
+                                <a class="dropdown-item" href="{{ url(app()->getLocale() == 'al'? 'en':'al' ) }}"> {{ app()->getLocale() == 'al'? 'English':'Albanian' }}</a>
                             </div>
                           </div>
                         <!-- Authentication Links -->
