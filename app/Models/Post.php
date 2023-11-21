@@ -31,7 +31,7 @@ class Post extends Model
     {
         return [
             'slug' => [
-                'source' => 'title'
+            'source' => 'title'
             ]
            ];
     }
@@ -52,15 +52,29 @@ class Post extends Model
 
     }
 
-    public function likes(){
-        return $this->hasMany(Like::class);
-    }
+    public function likes()
+     {
+    return $this->hasMany(Like::class)->where('reaction', 'like');
+     }
 
+     public function dislikes()
+    {
+    return $this->hasMany(Like::class)->where('reaction', 'dislike');
+     }
+    public function scopeLike($query)
+    {
+          $query->where('reaction', 'like');
+   } 
+
+     public function scopeDislike($query)
+      {
+          $query->where('reaction', 'dislike');
+      }
+   
     public function isUserReaction($user_id, $reaction)
     {
         return $this->likes()->where('user_id', $user_id)->where('reaction', $reaction)->exists();
     }
 
     
-
 }

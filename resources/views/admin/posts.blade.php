@@ -18,12 +18,12 @@
     <tbody>
         @foreach ($posts as $post)
       <tr>
-        <td>{{ $post->title}}</td>
+        <td>{{ $post->title }}</td>
         <td>{{ $post->description }}</td>
         <td>{{ $post->user->name }}</td>
         <td>{{ $post->comments_count }}</td>
-        <td>{{ $post->likes->where('reaction', 'like')->count() }}</td>
-        <td>{{ $post->likes->where('reaction', 'dislike')->count() }}</td>
+        <td>{{ $post->likes_count }}</td>
+        <td>{{ $post->dislikes_count }}</td>
     </tbody>
 </tr>
 

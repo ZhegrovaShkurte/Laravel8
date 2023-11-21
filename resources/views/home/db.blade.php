@@ -30,7 +30,19 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="{{ route('logout')}}">{{ __('Logout')}}</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Language
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Albanian</a>
+                        <a class="dropdown-item" href="#">English</a>
+                        
+                    </div>
+                </li>
             </ul>
+
+
          </nav>
          <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
