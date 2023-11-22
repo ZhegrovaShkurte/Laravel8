@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\LocalizationController;
-use App\Http\Controllers\SetLocalController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\DashboardPostController;
-use App\Http\Controllers\PostController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SetLocalController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\ChangeLanguageController;
 
 
 /*
@@ -27,44 +28,46 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware(['guest'])->group(function () {
-  Route::get('register', [RegisterController::class, 'create']);
+Route::middleware('localizationmiddleware')->group(function () {
 
-  Route::post('register', [RegisterController::class, 'register'])->name('register');
+  Route::middleware(['guest'])->group(function () {
+    Route::get('register', [RegisterController::class, 'create']);
 
-  Route::get('/login', [LoginController::class, 'index']);
+    Route::post('register', [RegisterController::class, 'register'])->name('register');
 
-  Route::post('/login', [LoginController::class, 'login'])->name('login');
-});
+    Route::get('/login', [LoginController::class, 'index']);
 
-Route::middleware(['auth'])->group(function () {
-
-  Route::match(['get', 'post'], 'logout', [LogoutController::class, 'logout'])->name('logout');
-
-  Route::middleware('adminmiddleware')->group(function () {
-
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-
-    Route::get('users/create', [UserController::class, 'create'])->name('create');
-
-    Route::post('users/store', [UserController::class, 'store'])->name('store');
-
-    Route::get('users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
-
-    Route::put('update/user/{user}', [UserController::class, 'update'])->name('users.update');
-
-    Route::get('update/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    
-    Route::get('dashboard/post',[DashboardPostController::class, 'index'])->name('dashboard.posts');
-
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
   });
+
+  Route::middleware(['auth'])->group(function () {
+
+    Route::match(['get', 'post'], 'logout', [LogoutController::class, 'logout'])->name('logout');
+
+    Route::middleware('adminmiddleware')->group(function () {
+
+      Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+      Route::get('users/create', [UserController::class, 'create'])->name('create');
+
+      Route::post('users/store', [UserController::class, 'store'])->name('store');
+
+      Route::get('users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
+
+      Route::put('update/user/{user}', [UserController::class, 'update'])->name('users.update');
+
+      Route::get('update/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+      Route::get('dashboard/post', [DashboardPostController::class, 'index'])->name('dashboard.posts');
+
+    });
   });
 
   Route::middleware(['usermiddleware'])->group(function () {
 
-   Route::get('/', [HomeController::class, 'dashboard'])->name('home');
+    Route::get('/', [HomeController::class, 'dashboard'])->name('home');
 
-   Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
+    Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
 
     Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
 
@@ -89,27 +92,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/like/{postId}', [PostController::class, 'like']);
 
     Route::post('/dislike/{postId}', [PostController::class, 'dislike']);
-    
-});
 
- /*Route::group(['prefix' => '{locale}', 'middleware' => 'SetLocale'], function () {
-  
-  Route::get('/', [HomeController::class, 'dashboard'])->name('home');
-  Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
-  Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-  Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-  Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-  Route::get('users/create', [UserController::class, 'create'])->name('create');
-  Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
-  Route::get('/login', [LoginController::class, 'index']);
-  Route::get('register', [RegisterController::class, 'create']);
+  });
   
 });
 
-*/
-
-Route::get("locale/{lange}", [LocalizationController::class, 'setLang']);
-
+Route::get('change/{lang}', [ChangeLanguageController::class, 'changeLanguage'])->name('change.language');
 
 
 

@@ -84,12 +84,6 @@ return [
 
     'locale' => 'en',
    
-    'locales' => [
-        'en', // English
-        'es', // Spanish
-        // Add more locales as needed
-    ],
-    
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -127,7 +121,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 

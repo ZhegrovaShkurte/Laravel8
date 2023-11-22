@@ -38,14 +38,15 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto"> 
                         <div class="dropdown">
+
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Language
-                            </a>
+                                Language
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="{{ route('change.language', ['lang' => 'en']) }}">English</a></li>
+                                  <li><a class="dropdown-item"  href="{{ route('change.language',['lang' => 'al']) }}">Albanian</a></li>
+                                </ul>
                           
-                            <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="locale/en">English</a></li>
-                              <li><a class="dropdown-item" href="locale/al">Albanian</a></li>
-                            </ul>
                           </div>
                         <!-- Authentication Links -->
                         @guest
@@ -91,5 +92,6 @@
             @yield('content')
         </main>
     </div>
+
 </body>
 </html>
