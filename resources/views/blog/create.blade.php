@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container">
-    <h1>Add Post</h1>
+    <h1>@lang('auth.addpost')</h1>
 
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -15,7 +15,7 @@
   @endif
       
     <section class="mt-3">
-        <form method="POST" action="{{ route('posts.index') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('posts.index', app()->getLocale() )}}" enctype="multipart/form-data">
             @csrf
 
     <div class="card p-3">

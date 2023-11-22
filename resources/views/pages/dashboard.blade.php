@@ -1,14 +1,14 @@
 @extends('home\db')
 @section('db')
 
-<h6>Data related to user and admin</h6>
+<h6>@lang('auth.data')</h6>
 <br>
 @if(Session::has('success'))
 <div class="alert alert-success" role="alert">
   {{Session::get('success')}}
 </div>
 @endif
-<a href="{{ route('create') }}"class="btn btn-primary btn-sm">Add User</a>
+<a href="{{ route('create',  app()->getLocale()) }}"class="btn btn-primary btn-sm">Add User</a>
 <br>
 <br>
 <table class="table">
@@ -19,7 +19,6 @@
     <th>Phone</th>
     <th>Profile Image</th>
     <th>Actions</th>
-    
   </tr>
   <tbody>
     @foreach ($users as $user)

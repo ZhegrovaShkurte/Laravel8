@@ -13,8 +13,8 @@
 <header class="py-7 bg-light border-bottom">
     <div class="container">
         <div class="text-center">
-            <h1 class="fw-bolder">Welcome to Blog Page<h1>
-            <p class="lead mb-0">Some of my Posts!!</p>
+            <h1 class="fw-bolder">@lang('auth.welcome')<h1>
+            <p class="lead mb-0">@lang('auth.header')</p>
         </div>
     </div>
 </header>
@@ -22,7 +22,7 @@
 @if (Auth::check())
 <div class="right">
   <!-- <div class="pt-15 w-4/5 m-auto"> -->
-    <a href="{{ route('posts.create') }}" class="btn btn-primary">Create Post</a>
+    <a href="{{ route('posts.create', app()->getLocale() ) }}" class="btn btn-primary">@lang('auth.create')</a>
 </div>
 </div>
 @endif

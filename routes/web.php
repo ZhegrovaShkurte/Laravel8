@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\SetLocalController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\PostController;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
@@ -59,9 +62,9 @@ Route::middleware(['auth'])->group(function () {
 
   Route::middleware(['usermiddleware'])->group(function () {
 
-    Route::get('/', [HomeController::class, 'dashboard'])->name('home');
+   Route::get('/', [HomeController::class, 'dashboard'])->name('home');
 
-    Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
+   Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
 
     Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
 
@@ -89,7 +92,23 @@ Route::middleware(['auth'])->group(function () {
     
 });
 
-Route::group(['prefix' => '{locale}'], function () {
-  Route::get('/', [HomeController::class, 'dashboard'])->name('home')->middleware('setLocale');
+Route::group(['prefix' => '{locale}', 'middleware' => 'SetLocale'], function () {
+  
+  Route::get('/', [HomeController::class, 'dashboard'])->name('home');
+  Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
+  Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+  Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+  Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+  Route::get('users/create', [UserController::class, 'create'])->name('create');
+  Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+  Route::get('/login', [LoginController::class, 'index']);
+  Route::get('register', [RegisterController::class, 'create']);
+  
 });
+
+
+
+
+
+
 

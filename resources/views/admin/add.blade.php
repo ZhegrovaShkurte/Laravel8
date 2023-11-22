@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Add-User') }}</div>
+                <div class="card-header">@lang('auth.adduser')</div>
 
                 <div class="card-body">
                     @if(Session::has('Success'))
@@ -88,7 +88,7 @@
                     <div class="row mb-0">
                         <div class="col-md-6 offset-md-4">
                             
-                            <a href="{{route('dashboard')}}" class="btn btn-danger">Back</a>
+                            <a href="{{route('dashboard', app()->getLocale())}}" class="btn btn-danger">Back</a>
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Save') }}
                             </button>

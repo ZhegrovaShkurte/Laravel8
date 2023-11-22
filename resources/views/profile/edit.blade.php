@@ -12,7 +12,7 @@
                         @csrf
                         @method('PUT')
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end">@lang('auth.name')</label>
 
                             <div class="col-md-6">
                                 <input name="name" type="text" value="{{ auth()->user()->name}}"/>
@@ -26,7 +26,7 @@
 
 
                         <div class="row mb-3">
-                            <label for="phone" class="col-md-4 col-form-label text-md-end">{{ __('Phone') }}</label>
+                            <label for="phone" class="col-md-4 col-form-label text-md-end">@lang('auth.phone')</label>
 
                         <div class="col-md-6">
                             <input name="phone" type="number" value="{{ auth()->user()->phone}}"/>
@@ -39,7 +39,7 @@
                     </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">@lang('auth.email')</label>
 
                             <div class="col-md-6">
                                 <input name="email" type="email" value="{{ auth()->user()->email}}"/>

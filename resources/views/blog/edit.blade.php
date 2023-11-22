@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container">
-    <h1>Update Post</h1>
+    <h1> @lang('auth.updatepost') </h1>
 
     @if ($errors->any())
     <div class="alert alert-danger">

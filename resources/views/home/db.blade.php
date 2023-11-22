@@ -10,6 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="{{ asset('import/assets/css/styles.css') }}" rel="stylesheet">
 
+        
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         </head>
         <body class="sb-nav-fixed">
@@ -30,16 +31,15 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="{{ route('logout')}}">{{ __('Logout')}}</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Language
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Albanian</a>
-                        <a class="dropdown-item" href="#">English</a>
-                        
+               
+                <div class="dropdown">
+                    <button class="btn btn-secondary custom-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ app()->getLocale() == 'en'? 'English': 'Albanian' }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ url(app()->getLocale() == 'al'? 'en':'al' ) }}"> {{ app()->getLocale() == 'al'? 'English':'Albanian' }}</a>
                     </div>
-                </li>
+                  </div>
             </ul>
 
 
@@ -50,11 +50,11 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Pages</div>
-                            <a class="nav-link" href="{{ route('home') }}">
+                            <a class="nav-link" href="{{ route('home', app()->getLocale()) }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Home
                             </a>   
-                            <a class="nav-link" href="{{ route('dashboard.posts')}} ">
+                            <a class="nav-link" href="{{ route('dashboard.posts', app()->getLocale() )}} ">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Posts
                             </a>           

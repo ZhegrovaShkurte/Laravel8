@@ -17,7 +17,19 @@ return [
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'title' => 'Home',
-    'edit' => 'Edit',
-    'post' => 'Posts'
+    'edited' => 'Edit',
+    'post' => 'Posts',
+    'name' => 'Name',
+    'phone' => 'Phone',
+    'email' => 'Email Address',
+     'welcome' => 'Welcome to Blog Page',
+     'header' => 'Some of my posts!',
+     'addpost' => 'Add Post' ,
+     'create' => 'Create Post',
+     'register' => 'Register',
+     'login' => 'Login',
+     'data' => 'Data related to user and admin',
+     'adduser' => 'Add-User',
+     'updatepost'=> 'Update Post'
 
 ];
