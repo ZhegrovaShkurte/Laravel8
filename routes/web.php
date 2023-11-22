@@ -92,7 +92,7 @@ Route::middleware(['auth'])->group(function () {
     
 });
 
-Route::group(['prefix' => '{locale}', 'middleware' => 'SetLocale'], function () {
+ /*Route::group(['prefix' => '{locale}', 'middleware' => 'SetLocale'], function () {
   
   Route::get('/', [HomeController::class, 'dashboard'])->name('home');
   Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
@@ -106,8 +106,9 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'SetLocale'], function () 
   
 });
 
+*/
 
-
+Route::get("locale/{lange}", [LocalizationController::class, 'setLang']);
 
 
 

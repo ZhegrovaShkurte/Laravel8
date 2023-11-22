@@ -8,7 +8,7 @@
                 <div class="card-header">@lang('auth.login')</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login',  app()->getLocale()) }}">
+                    <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="row mb-3">

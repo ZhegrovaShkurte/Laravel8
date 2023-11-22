@@ -4,9 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
-class SetLocale
+class LocalizationMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,12 +18,13 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check()) {
-            $locale = auth()->user()->preferred_locale;
-        } else {
-            $locale = config('app.locale');
+        if(Session::get("locale") !=null){
+          App::setLocale(Session::get("locale"));
         }
-        app()->setLocale($locale);
+        else {
+            Session::put("locale", "en");
+            App::setLocale(Session::get("locale"));
+        }
         return $next($request);
     }
 }
