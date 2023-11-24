@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dislike;
 use App\Models\Like;
 use App\Models\Post;
-use App\Models\Media;
+use App\Events\PostLiked;
 use App\Traits\SaveMedias;
+use App\Events\PostDisliked;
 use Illuminate\Http\Request;
 use App\Http\Requests\SavePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
-use App\Models\Comment;
 
 
 class PostController extends Controller
@@ -127,30 +126,5 @@ class PostController extends Controller
         return redirect('/posts')->with('message', 'Your post has been deleted');
     }
 
-    public function like(Request $request, $postId)
-    {
-        $userId = auth()->user()->id;
-
-        Like::create([
-            'post_id' => $postId,
-            'user_id' => $userId,
-            'reaction' => 'like',
-        ]);
-
-        return redirect()->back();
-    }
-
-    public function dislike(Request $request, $postId)
-    {
-        $userId = auth()->user()->id;
-
-        Like::create([
-            'post_id' => $postId,
-            'user_id' => $userId,
-            'reaction' => 'dislike',
-        ]);
-
-        return redirect()->back();
-    }
 }
 

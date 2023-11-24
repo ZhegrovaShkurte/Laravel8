@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Events\PostLiked;
+use App\Events\PostDisliked;
+use App\Listeners\SendPostLiked;
+use App\Listeners\SendPostDisliked;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,6 +22,14 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        
+           PostLiked::class => [
+            SendPostLiked::class
+           ],
+        PostDisliked::class => [
+            SendPostDisliked::class
+        ],
     ];
 
     /**
@@ -27,7 +39,16 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Event::listen(
+            PostLiked::class,
+            [SendPostLiked::class, 'handle']
+        );
+
+        Event::listen(
+            PostDisliked::class,
+            [SendPostDisliked::class, 'handle']
+        );
+     
     }
 
     /**

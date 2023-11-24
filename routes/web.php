@@ -1,18 +1,18 @@
 <?php
 
-use App\Http\Middleware\SetLocale;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\SetLocalController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\EventDislikeController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\ChangeLanguageController;
 
@@ -35,9 +35,9 @@ Route::middleware('localizationmiddleware')->group(function () {
 
     Route::post('register', [RegisterController::class, 'register'])->name('register');
 
-    Route::get('/login', [LoginController::class, 'index']);
+    Route::get('login', [LoginController::class, 'index']);
 
-    Route::post('/login', [LoginController::class, 'login'])->name('login');
+    Route::post('login', [LoginController::class, 'login'])->name('login');
   });
 
   Route::middleware(['auth'])->group(function () {
@@ -46,7 +46,7 @@ Route::middleware('localizationmiddleware')->group(function () {
 
     Route::middleware('adminmiddleware')->group(function () {
 
-      Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+      Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
       Route::get('users/create', [UserController::class, 'create'])->name('create');
 
@@ -69,35 +69,36 @@ Route::middleware('localizationmiddleware')->group(function () {
 
     Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
 
-    Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
+    Route::get('home', [HomeController::class, 'dashboard'])->name('home');
 
     Route::put('update/profile', [ProfileController::class, 'update'])->name('update.profile');
 
-    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('posts', [PostController::class, 'index'])->name('posts.index');
 
-    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
 
-    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::post('posts', [PostController::class, 'store'])->name('posts.store');
 
-    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+    Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
-    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
 
-    Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
 
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-    Route::post('/posts/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::post('posts/comments', [CommentController::class, 'store'])->name('comments.store');
 
-    Route::post('/like/{postId}', [PostController::class, 'like']);
+    Route::post('like/{postId}', [PostController::class, 'like']);
 
-    Route::post('/dislike/{postId}', [PostController::class, 'dislike']);
+    Route::post('dislike/{postId}', [PostController::class, 'dislike']);
 
   });
-  
+
 });
 
 Route::get('change/{lang}', [ChangeLanguageController::class, 'changeLanguage'])->name('change.language');
 
+Route::any('reaction/event', [EventController::class, 'reactionEvent'])->name('reaction.event');
 
 
