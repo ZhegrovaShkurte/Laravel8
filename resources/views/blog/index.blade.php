@@ -71,12 +71,12 @@
                              <p>You disliked this post!</p>
                          @else
                              <button type="button" class="icon-button" id="likeButton"
-                                 onclick="location.href='reaction/event?reaction=like&post_title=<?php echo urlencode($post->title); ?>&post_id=<?php echo $post->id; ?>'">
+                                 onclick="location.href='{{ route('reaction.event', ['reaction' => 'like', 'post_title' => urlencode($post->title), 'post_id' => $post->id]) }}'">
                                  <i class="fa fa-regular fa-thumbs-up"></i>
                              </button>
 
                              <button type="button" class="icon-button" id="dislikeButton"
-                                 onclick="location.href='reaction/event?reaction=dislike&post_title=<?php echo urlencode($post->title); ?>&post_id=<?php echo $post->id; ?>'">
+                                 onclick="location.href='{{ route('reaction.event', ['reaction' => 'dislike', 'post_title' => urlencode($post->title), 'post_id' => $post->id]) }}'">
                                  <i class="fa fa-regular fa-thumbs-down"></i>
                              </button>
                          @endif
@@ -98,6 +98,7 @@
                                  </form>
                              </span>
                          @endif
+
                      </article>
                  </div>
              </div>
