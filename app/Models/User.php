@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Like;
+use DB;
 
 class User extends Authenticatable
 {
@@ -69,5 +70,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Like::class)->like();
     }
+
+    public static function getAllUser(){
+        $result = DB::table('users')
+        ->select('id','name','email','phone','role_id')
+        ->get()->toArray();
+        return $result;
+    }
+
 }
 

@@ -20,7 +20,7 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('index')->with('error', 'You have no admin access');
+        return redirect('dashboard')->with('error', 'You have no admin access');
 
     }
 }

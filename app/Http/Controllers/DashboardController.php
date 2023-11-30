@@ -7,7 +7,7 @@ use App\Models\User;
 
 class DashboardController extends Controller
 {
-    public function dashboard()
+    public function index()
     {
         $users=User::all();
         return view('pages.dashboard',['users'=>$users]);

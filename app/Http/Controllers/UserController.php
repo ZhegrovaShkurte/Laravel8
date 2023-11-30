@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SaveUserRequest;
-use App\Http\Requests\UpdateUserRequest;
-use App\Traits\SaveMedias;
 use Auth;
 use Hash;
-use Illuminate\Http\Request;
+use Excel;
 use App\Models\User;
+use App\Traits\SaveMedias;
+use App\Exports\UserExport;
+use Illuminate\Http\Request;
+use App\Http\Requests\SaveUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 
 class UserController extends Controller
@@ -72,5 +74,9 @@ class UserController extends Controller
             return back()->with('error', $exception->getMessage());
         }
         return redirect()->route('index')->with('success', 'User Deleted Successfully');
+    }
+
+    public function exportExcel(){
+        return Excel::download(new UserExport, 'user-excel.xlsx');
     }
 }

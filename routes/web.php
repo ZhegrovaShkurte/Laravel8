@@ -56,6 +56,8 @@ Route::middleware('localizationmiddleware')->group(function () {
 
       Route::get('dashboard', [DashboardController::class, 'index'])->name('index');
 
+      Route::get('export/excel', [UserController::class, 'exportExcel'])->name('export.excel');
+
       Route::get('users/create', [UserController::class, 'create'])->name('create');
 
       Route::post('users/store', [UserController::class, 'store'])->name('store');

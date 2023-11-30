@@ -9,6 +9,8 @@
 </div>
 @endif
 <a href="{{ route('create',  app()->getLocale()) }}"class="btn btn-primary btn-sm">Add User</a>
+
+<a href="{{route ('export.excel') }}"class="btn btn-primary btn-sm">Export</a>
 <br>
 <br>
 <table class="table">
