@@ -28,6 +28,6 @@ class SendPostDisliked
      */
     public function handle(PostDisliked $event)
     {
-        Mail::to('hello@example.com')->send(new PostDislikedMail($event->userName, $event->postTitle,$event->message, $event->email));
+        Mail::to('hello@example.com')->send(new PostDislikedMail($event->userName, $event->postTitle, $event->message, $event->email));
     }
 }

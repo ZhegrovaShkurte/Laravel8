@@ -52,7 +52,7 @@ class PostLikedMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.postliked'
+            view: 'emails.post-liked'
         );
     }
 

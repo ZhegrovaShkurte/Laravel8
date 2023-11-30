@@ -88,7 +88,7 @@
                     <div class="row mb-0">
                         <div class="col-md-6 offset-md-4">
                             
-                            <a href="{{route('dashboard', app()->getLocale())}}" class="btn btn-danger">Back</a>
+                            <a href="{{route('index', app()->getLocale())}}" class="btn btn-danger">Back</a>
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Save') }}
                             </button>

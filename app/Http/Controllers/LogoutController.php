@@ -9,7 +9,7 @@ use Session;
 
 class LogoutController extends Controller
 {
-   public function logout()
+   public function userLogout()
    {
       Session::flush();
       Auth::logout();

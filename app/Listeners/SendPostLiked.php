@@ -28,11 +28,8 @@ class SendPostLiked
      */
     public function handle(PostLiked $event)
     {
-        Mail::to('hello@example.com')->send(new PostLikedMail($event->userName, $event->postTitle,$event->message, $event->email));
+        Mail::to('hello@example.com')->send(new PostLikedMail($event->userName, $event->postTitle, $event->message, $event->email));
 
     }
-
-      
-       
-    }
+}
 

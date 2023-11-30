@@ -23,10 +23,10 @@ class SavePostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title' => 'required',
-            'description' => 'required',
-            'image' => 'required|mimes:jpg,png,jpeg'          
+        return [  
+           'title' => 'required',
+          'description' => 'required',
+          'image' => 'required|mimes:jpg,png,jpeg'          
         ];
     }
 }

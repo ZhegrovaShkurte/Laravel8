@@ -9,22 +9,20 @@ use Hash;
 
 class LoginController extends Controller
 {
-    public function index()
-    {
-        return view('pages.login');
+  public function index()
+  {
+    return view('pages.login');
+  }
+
+  public function attemptLogin(LoginRequest $request)
+  {
+    $validated = $request->validated();
+
+    if (Auth::attempt($validated)) {
+      return redirect()->route('home');
+    } else {
+      return redirect()->route('login')->with('error', 'Credentials were wrong');
     }
 
-    public function login(LoginRequest $request)
-    {
-
-        $validated=$request->validated();
-
-        if  (Auth::attempt($validated))
-        {
-             return redirect()->route('dashboard');
-        } else {
-          return redirect()->route('login')->with('error', 'Credentials were wrong');
-        }
-            
-}
+  }
 }

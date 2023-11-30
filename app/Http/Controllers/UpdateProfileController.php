@@ -8,7 +8,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 
-class ProfileController extends Controller
+class UpdateProfileController extends Controller
 {
     public function edit()
     {

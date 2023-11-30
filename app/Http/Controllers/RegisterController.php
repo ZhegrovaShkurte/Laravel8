@@ -10,28 +10,22 @@ use Hash;
 
 class RegisterController extends Controller
 {
-  public function create()
+  public function index()
   {
     return view('pages.register');
   }
 
-  public function register(RegisterUserRequest $request)
+  public function registerUser(RegisterUserRequest $request)
   {
     try {
       $validated = $request->validated();
 
-      User::create([
-        'name' => $validated['name'],
-        'email' => $validated['email'],
-        'phone' => $validated['phone'],
-        'password' => Hash::make($validated['password']),
-        'role_id' => 2
-      ]);
+      User::create($validated);
   
       if (Auth::attempt($validated)) {
         return redirect()->route('home')->with('success', 'Register was successful');
       } else {
-        return redirect()->route('register')->with('error', 'Credentials were wrong');
+        return redirect()->route('register')->with('error', 'Authentication failed');
       }
     }  catch(\Exception $exception) {
       return back()->with('error', $exception->getMessage());

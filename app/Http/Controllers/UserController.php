@@ -9,7 +9,7 @@ use Auth;
 use Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Media;
+
 
 class UserController extends Controller
 {
@@ -23,10 +23,7 @@ class UserController extends Controller
 
     public function store(SaveUserRequest $request)
     {
-
-
         $file = $request->image;
-
 
         try {
 
@@ -40,14 +37,12 @@ class UserController extends Controller
                 'role_id' => 2
             ]);
 
-
             $this->saveMedias($request, $file, $user->id, 'profile', 0);
-
 
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
-        return redirect()->route('dashboard')->with('success', 'User Added Successfully');
+        return redirect()->route('index')->with('success', 'User Added Successfully');
     }
     public function edit(User $user)
     {
@@ -57,17 +52,16 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         try {
+
             $validated = $request->validated();
 
-            $user->update([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'phone' => $validated['phone']
-            ]);
+            $user->update($validated);
+
         } catch (\Exception $exception) {
+          
             return back()->with('error', $exception->getMessage());
         }
-        return redirect()->route('dashboard')->with('success', 'User Updated Successfully');
+        return redirect()->route('index')->with('success', 'User Updated Successfully');
     }
 
     public function destroy(User $user)
@@ -77,6 +71,6 @@ class UserController extends Controller
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
-        return redirect()->route('dashboard')->with('success', 'User Deleted Successfully');
+        return redirect()->route('index')->with('success', 'User Deleted Successfully');
     }
 }

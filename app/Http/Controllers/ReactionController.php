@@ -8,9 +8,9 @@ use App\Events\PostDisliked;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 
-class EventController extends Controller
+class ReactionController extends Controller
 {
-    public function reactionEvent(Request $request)
+    public function store(Request $request)
     {
         $userName = auth()->user()->name;
 
@@ -44,7 +44,6 @@ class EventController extends Controller
                 'reaction' => 'dislike',
             ]);
 
-
             Event::dispatch(
                 new PostDisliked(
                     $userName,
@@ -55,9 +54,6 @@ class EventController extends Controller
             );
 
         }
-
-
         return redirect()->back();
-
     }
 }

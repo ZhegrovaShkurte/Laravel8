@@ -51,7 +51,7 @@ class PostDislikedMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.postdisliked',
+            view: 'emails.post-disliked',
         );
     }
 

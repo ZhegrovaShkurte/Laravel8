@@ -72,14 +72,14 @@
                          @else
                              <button type="button" class="icon-button" id="likeButton">
                                  <a
-                                     href="{{ route('reaction.event', ['reaction' => 'like', 'post_title' =>  $post->title, 'post_id' => $post->id]) }}">
+                                     href="{{ route('reaction.store', ['reaction' => 'like', 'post_title' =>  $post->title, 'post_id' => $post->id]) }}">
                                      <i class="fa fa-regular fa-thumbs-up"></i>
                                  </a>
                              </button>
 
                              <button type="button" class="icon-button" id="dislikeButton">
                                  <a
-                                     href="{{ route('reaction.event', ['reaction' => 'dislike', 'post_title' =>  $post->title, 'post_id' => $post->id]) }}">
+                                     href="{{ route('reaction.store', ['reaction' => 'dislike', 'post_title' =>  $post->title, 'post_id' => $post->id]) }}">
                                      <i class="fa fa-regular fa-thumbs-down"></i>
                                  </a>
                              </button>

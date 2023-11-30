@@ -1,18 +1,18 @@
 <?php
 
 
+use App\Http\Controllers\ReactionController;
+use App\Http\Controllers\ReactionEventController;
+use App\Http\Controllers\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EventDislikeController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\ChangeLanguageController;
 
@@ -28,25 +28,33 @@ use App\Http\Controllers\ChangeLanguageController;
 |
 */
 
+Route::get('change/{lang}', [ChangeLanguageController::class, 'changeLanguage'])->name('change.language');
+
+
 Route::middleware('localizationmiddleware')->group(function () {
 
   Route::middleware(['guest'])->group(function () {
-    Route::get('register', [RegisterController::class, 'create']);
+    
+    Route::get('register', [RegisterController::class, 'index']);
 
-    Route::post('register', [RegisterController::class, 'register'])->name('register');
+    Route::post('register', [RegisterController::class, 'registerUser'])->name('register');
 
     Route::get('login', [LoginController::class, 'index']);
 
-    Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::post('login', [LoginController::class, 'attemptLogin'])->name('login');
   });
 
   Route::middleware(['auth'])->group(function () {
 
-    Route::match(['get', 'post'], 'logout', [LogoutController::class, 'logout'])->name('logout');
+    Route::any('reaction', [ReactionController::class, 'store'])->name('reaction.store');
+
+    Route::match(['get', 'post'], 'logout', [LogoutController::class, 'userLogout'])->name('logout');
 
     Route::middleware('adminmiddleware')->group(function () {
 
-      Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+      Route::get('dashboard/post', [DashboardPostController::class, 'index'])->name('dashboard.posts');
+
+      Route::get('dashboard', [DashboardController::class, 'index'])->name('index');
 
       Route::get('users/create', [UserController::class, 'create'])->name('create');
 
@@ -58,20 +66,20 @@ Route::middleware('localizationmiddleware')->group(function () {
 
       Route::get('update/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-      Route::get('dashboard/post', [DashboardPostController::class, 'index'])->name('dashboard.posts');
-
     });
   });
 
   Route::middleware(['usermiddleware'])->group(function () {
 
-    Route::get('/', [HomeController::class, 'dashboard'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
+    Route::get('home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('home', [HomeController::class, 'dashboard'])->name('home');
+    Route::get('edit', [UpdateProfileController::class, 'edit'])->name('edit');
 
-    Route::put('update/profile', [ProfileController::class, 'update'])->name('update.profile');
+    Route::put('update/profile', [UpdateProfileController::class, 'update'])->name('update.profile');
+
+    Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 
     Route::get('posts', [PostController::class, 'index'])->name('posts.index');
 
@@ -87,18 +95,10 @@ Route::middleware('localizationmiddleware')->group(function () {
 
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-    Route::post('posts/comments', [CommentController::class, 'store'])->name('comments.store');
-
-    Route::post('like/{postId}', [PostController::class, 'like']);
-
-    Route::post('dislike/{postId}', [PostController::class, 'dislike']);
-
   });
 
 });
 
-Route::get('change/{lang}', [ChangeLanguageController::class, 'changeLanguage'])->name('change.language');
 
-Route::any('reaction/event', [EventController::class, 'reactionEvent'])->name('reaction.event');
 
 

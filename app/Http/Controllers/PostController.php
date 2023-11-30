@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Like;
 use App\Models\Post;
 use App\Events\PostLiked;
@@ -45,26 +46,29 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SavePostRequest $request)
+    public function store(SavePostRequest $request, Post $post)
     {
         try {
-
-            $file = $request->image;
-
-            $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
-
-            $post = Post::create([
-                'title' => $request->input('title'),
-                'description' => $request->input('description'),
-                'slug' => $slug,
-                'user_id' => auth()->user()->id
-            ]);
-
-            $this->saveMedias($request, $file, $post->user_id, 'post', $post->id);
+            if ($request->hasFile('image') && $request->file('image')->isValid()) {
+                $file = $request->image;
+    
+                $data = $request->safe([
+                    'title',
+                    'description',
+                ]);
+    
+                $data['slug'] = SlugService::createSlug(Post::class, 'slug', $data['title']);
+                $data['user_id'] = auth()->user()->id;
+    
+                $post = Post::create($data);
+              
+                $this->saveMedias($request, $file, $post->user_id, 'post', $post->id);
+            }
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
-        return redirect('/posts')->with('message', 'Your post has been added! ');
+    
+        return redirect('/posts')->with('message', 'Your post has been added!');
     }
 
     /**
@@ -75,7 +79,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-
         $posts = Post::with('comments', 'media', 'user', 'comments.replies')->find($post->id);
         return view('blog.show')->with('post', $posts);
     }
@@ -101,12 +104,16 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
         try {
-            $post->update([
-                'title' => $request->input('title'),
-                'description' => $request->input('description'),
-                'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-                'user_id' => auth()->user()->id
+            $data = $request->safe([
+                'title',
+                'description',
             ]);
+
+            $data['slug'] = SlugService::createSlug(Post::class, 'slug', $data['title']);
+            $data['user_id'] = auth()->user()->id;
+
+            $post->update($data);
+
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
@@ -122,7 +129,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-
         return redirect('/posts')->with('message', 'Your post has been deleted');
     }
 

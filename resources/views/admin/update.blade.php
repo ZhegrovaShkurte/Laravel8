@@ -49,7 +49,7 @@
     
                             <div class="col-md-6">
                                 <input name="image" type="file" value=""/>
-                                @error('name')
+                                @error('image')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -73,7 +73,7 @@
                     <div class="row mb-0">
                         <div class="col-md-6 offset-md-4">
                             
-                            <a href="{{route('dashboard')}}" class="btn btn-danger">Back</a>
+                            <a href="{{route('index')}}" class="btn btn-danger">Back</a>
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Save') }}
                             </button>
