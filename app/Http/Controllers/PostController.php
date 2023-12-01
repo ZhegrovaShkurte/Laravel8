@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateUserRequest;
-use App\Models\Like;
+
 use App\Models\Post;
-use App\Events\PostLiked;
 use App\Traits\SaveMedias;
-use App\Events\PostDisliked;
-use Illuminate\Http\Request;
 use App\Http\Requests\SavePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;

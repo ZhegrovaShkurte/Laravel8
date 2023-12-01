@@ -30,7 +30,6 @@ use App\Http\Controllers\ChangeLanguageController;
 
 Route::get('change/{lang}', [ChangeLanguageController::class, 'changeLanguage'])->name('change.language');
 
-
 Route::middleware('localizationmiddleware')->group(function () {
 
   Route::middleware(['guest'])->group(function () {
@@ -54,7 +53,7 @@ Route::middleware('localizationmiddleware')->group(function () {
 
       Route::get('dashboard/post', [DashboardPostController::class, 'index'])->name('dashboard.posts');
 
-      Route::get('dashboard', [DashboardController::class, 'index'])->name('index');
+      Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
       Route::get('export/excel', [UserController::class, 'exportExcel'])->name('export.excel');
 
@@ -73,7 +72,7 @@ Route::middleware('localizationmiddleware')->group(function () {
 
   Route::middleware(['usermiddleware'])->group(function () {
 
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+   // Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get('home', [HomeController::class, 'index'])->name('home');
 

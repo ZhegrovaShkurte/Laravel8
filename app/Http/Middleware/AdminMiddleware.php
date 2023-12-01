@@ -19,8 +19,7 @@ class AdminMiddleware
         if (auth()->user()->role_id == 1) {
             return $next($request);
         }
-
-        return redirect('dashboard')->with('error', 'You have no admin access');
+        return redirect('login')->with('error', 'You have no admin access');
 
     }
 }
