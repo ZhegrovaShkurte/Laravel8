@@ -17,7 +17,7 @@ return [
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'title' => 'Home',
-    'edited' => 'Edit',
+    'edited' => 'Edit Profile',
     'post' => 'Posts',
     'name' => 'Name',
     'phone' => 'Phone',

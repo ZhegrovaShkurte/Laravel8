@@ -17,15 +17,15 @@
                                     <br><br>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
-                                            <a href="{{ route('posts.index', ['locale' => app()->getLocale()]) }}"
-                                                class="btn btn-primary">@lang('auth.post')</a>
+                                            <a href="{{ route('edit', ['locale' => app()->getLocale()]) }}"
+                                                class="btn btn-success">@lang('auth.edited')</a>
                                         </div>
                                     </div>
                                     <br><br>
                                     <div class="row mb-0">
                                         <div class="col-md-6">
-                                            <a href="{{ route('edit', ['locale' => app()->getLocale()]) }}"
-                                                class="btn btn-success">@lang('auth.edited')</a>
+                                            <a href="{{ route('posts.index', ['locale' => app()->getLocale()]) }}"
+                                                class="btn btn-primary">@lang('auth.post')</a>
                                         </div>
                                     </div>
 

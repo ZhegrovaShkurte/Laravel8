@@ -71,12 +71,5 @@ class User extends Authenticatable
         return $this->hasMany(Like::class)->like();
     }
 
-    public static function getAllUser(){
-        $result = DB::table('users')
-        ->select('id','name','email','phone','role_id')
-        ->get()->toArray();
-        return $result;
-    }
-
 }
 
