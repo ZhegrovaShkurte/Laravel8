@@ -74,4 +74,5 @@ class Post extends Model
     {
         return $this->likes()->where('user_id', $user_id)->where('reaction', $reaction)->exists();
     }
+    
 }

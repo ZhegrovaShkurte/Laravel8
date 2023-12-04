@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Like;
-use DB;
+
 
 class User extends Authenticatable
 {
@@ -24,8 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'role_id',
-        
+        'role_id',  
     ];
 
     /**
@@ -49,7 +48,7 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
     }
 
     public function medias()
@@ -65,11 +64,9 @@ class User extends Authenticatable
     public function likes(){
         return $this->hasMany(Like::class)->like();
     }
-
     public function dislikes()
     {
         return $this->hasMany(Like::class)->like();
     }
-
 }
 

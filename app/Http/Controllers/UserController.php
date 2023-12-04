@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+
 use Hash;
 use Excel;
 use App\Models\User;
 use App\Traits\SaveMedias;
 use App\Exports\UserExport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SaveUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
@@ -29,22 +30,24 @@ class UserController extends Controller
 
         try {
 
-            $validated = $request->validated();
+            $result = DB::transaction(function () use ($request, $file) {
+                $validated = $request->validated();
 
-            $user = User::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'phone' => $validated['phone'],
-                'password' => Hash::make($validated['password']),
-                'role_id' => 2
-            ]);
+                $user = User::create([
+                    'name' => $validated['name'],
+                    'email' => $validated['email'],
+                    'phone' => $validated['phone'],
+                    'password' => Hash::make($validated['password']),
+                    'role_id' => 2
 
-            $this->saveMedias($request, $file, $user->id, 'profile', 0);
+                ]);
+                $this->saveMedias($request, $file, $user->id, 'profile', 0);
+            });
 
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
-        return redirect()->route('index')->with('success', 'User Added Successfully');
+        return redirect()->route('dashboard')->with('success', 'User Added Successfully');
     }
     public function edit(User $user)
     {
@@ -60,7 +63,7 @@ class UserController extends Controller
             $user->update($validated);
 
         } catch (\Exception $exception) {
-          
+
             return back()->with('error', $exception->getMessage());
         }
         return redirect()->route('index')->with('success', 'User Updated Successfully');
@@ -76,7 +79,8 @@ class UserController extends Controller
         return redirect()->route('index')->with('success', 'User Deleted Successfully');
     }
 
-    public function exportExcel(){
+    public function exportExcel()
+    {
         return Excel::download(new UserExport, 'user-excel.xlsx');
     }
 }

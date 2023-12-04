@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Traits\SaveMedias;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SavePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -45,6 +46,9 @@ class PostController extends Controller
     public function store(SavePostRequest $request, Post $post)
     {
         try {
+
+            $result = DB::transaction(function () use ($request) {
+
             if ($request->hasFile('image') && $request->file('image')->isValid()) {
                 $file = $request->image;
     
@@ -52,7 +56,7 @@ class PostController extends Controller
                     'title',
                     'description',
                 ]);
-    
+            
                 $data['slug'] = SlugService::createSlug(Post::class, 'slug', $data['title']);
                 $data['user_id'] = auth()->user()->id;
     
@@ -60,6 +64,8 @@ class PostController extends Controller
               
                 $this->saveMedias($request, $file, $post->user_id, 'post', $post->id);
             }
+        });
+
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
