@@ -40,6 +40,9 @@
  
   @endforeach
 </table>
-
+<span>
+  {{$users->links()}}
+</span>
+</html>
 
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\DatatableController;
 use App\Http\Controllers\ReactionController;
 use App\Http\Controllers\ReactionEventController;
 use App\Http\Controllers\UpdateProfileController;
@@ -66,6 +67,8 @@ Route::middleware('localizationmiddleware')->group(function () {
       Route::put('update/user/{user}', [UserController::class, 'update'])->name('users.update');
 
       Route::get('update/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+      Route::get('datatables/users', [UserController::class, 'index'])->name('datatables.users');
 
     });
   });

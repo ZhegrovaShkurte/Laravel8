@@ -54,6 +54,11 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Home
                             </a>   
+                            <div class="sb-sidenav-menu-heading">Pages</div>
+                            <a class="nav-link" href="{{ route('datatables.users') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Datatables Users
+                            </a>   
                             <a class="nav-link" href="{{ route('dashboard.posts', app()->getLocale() )}} ">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Posts

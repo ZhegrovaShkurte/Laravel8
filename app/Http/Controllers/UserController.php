@@ -12,12 +12,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SaveUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use DataTables;
 
 
 class UserController extends Controller
 {
     use SaveMedias;
 
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = User::select('*');
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('admin.datatables-users');
+    }
     public function create()
     {
 
@@ -66,7 +78,7 @@ class UserController extends Controller
 
             return back()->with('error', $exception->getMessage());
         }
-        return redirect()->route('index')->with('success', 'User Updated Successfully');
+        return redirect()->route('dashboard')->with('success', 'User Updated Successfully');
     }
 
     public function destroy(User $user)
@@ -76,7 +88,7 @@ class UserController extends Controller
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
-        return redirect()->route('index')->with('success', 'User Deleted Successfully');
+        return redirect()->route('dashboard')->with('success', 'User Deleted Successfully');
     }
 
     public function exportExcel()
