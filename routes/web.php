@@ -68,7 +68,7 @@ Route::middleware('localizationmiddleware')->group(function () {
 
       Route::get('update/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-      Route::get('datatables/users', [UserController::class, 'index'])->name('datatables.users');
+      Route::get('users/datatables', [UserController::class, 'index'])->name('users.datatables');
 
     });
   });
