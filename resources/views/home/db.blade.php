@@ -55,7 +55,7 @@
                                 Home
                             </a>   
                             <div class="sb-sidenav-menu-heading">Pages</div>
-                            <a class="nav-link" href="{{ route('datatables.users') }}">
+                            <a class="nav-link" href="{{ route('users.datatables') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Datatables Users
                             </a>   

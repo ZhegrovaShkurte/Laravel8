@@ -27,7 +27,7 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th width="100px">Action</th>
-                </tr>
+                </tr>          
             </thead>
             <tbody>
             </tbody>
@@ -57,18 +57,13 @@
                     name: 'phone'
                 },
                 {
-                    data: 'id',
-                    render: function(data) {
-                        return '<a href="{{ route('users.edit', '') }}/' + data +
-                            '" class="btn btn-primary btn-sm">Edit</a>' +
-                            '<a href="{{ route('users.destroy', '') }}/' + data +
-                            '" class="btn btn-danger btn-sm">Delete</a>';
-                    },
+                    data: 'action',
                     name: 'action',
                     orderable: false,
                     searchable: false
+                   
                 }
-
+            
 
             ]
         });

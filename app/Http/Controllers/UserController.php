@@ -15,29 +15,26 @@ use App\Http\Requests\UpdateUserRequest;
 use DataTables;
 
 
-class UserController extends Controller
-{
+class UserController extends Controller {
     use SaveMedias;
 
-    public function index(Request $request)
-    {
-        if ($request->ajax()) {
+    public function index(Request $request) {
+        if($request->ajax()) {
             $data = User::select('*');
             return Datatables::of($data)
-                ->addIndexColumn()
-                ->rawColumns(['action'])
-                ->make(true);
+            ->addColumn('action', function($user) {
+                return view('admin.buttons', compact('user'));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
         }
         return view('admin.datatables-users');
     }
-    public function create()
-    {
+    public function create() {
 
         return view('admin.add');
     }
-
-    public function store(SaveUserRequest $request)
-    {
+    public function store(SaveUserRequest $request) {
         $file = $request->image;
 
         try {
@@ -61,13 +58,11 @@ class UserController extends Controller
         }
         return redirect()->route('dashboard')->with('success', 'User Added Successfully');
     }
-    public function edit(User $user)
-    {
+    public function edit(User $user) {
         return view('admin.update', compact('user'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
-    {
+    public function update(UpdateUserRequest $request, User $user) {
         try {
 
             $validated = $request->validated();
@@ -81,8 +76,7 @@ class UserController extends Controller
         return redirect()->route('dashboard')->with('success', 'User Updated Successfully');
     }
 
-    public function destroy(User $user)
-    {
+    public function destroy(User $user) {
         try {
             $user->delete();
         } catch (\Exception $exception) {
@@ -91,8 +85,7 @@ class UserController extends Controller
         return redirect()->route('dashboard')->with('success', 'User Deleted Successfully');
     }
 
-    public function exportExcel()
-    {
+    public function exportExcel() {
         return Excel::download(new UserExport, 'user-excel.xlsx');
     }
 }
