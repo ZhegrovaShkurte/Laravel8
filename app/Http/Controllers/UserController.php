@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Hash;
 use Excel;
 use App\Models\User;
@@ -22,11 +21,11 @@ class UserController extends Controller {
         if($request->ajax()) {
             $data = User::select('*');
             return Datatables::of($data)
-            ->addColumn('action', function($user) {
-                return view('admin.buttons', compact('user'));
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+                ->addColumn('action', function ($user) {
+                    return view('admin.buttons', compact('user'));
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
         return view('admin.datatables-users');
     }
