@@ -39,7 +39,7 @@
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('users.datatables') }}",
+            ajax: "{{ route('users.datatable') }}",
             columns: [{
                     data: 'id',
                     name: 'id'
@@ -60,8 +60,7 @@
                     data: 'action',
                     name: 'action',
                     orderable: false,
-                    searchable: false
-                   
+                    searchable: false     
                 }
             
 

@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
-use App\Models\User;
-use Auth;
 use Illuminate\Http\Request;
 
-class UpdateProfileController extends Controller
+class ProfileController extends Controller
 {
     public function edit()
     {
-        return view('profile.edit');
+        return view('user.profile-edit');
     }
 
     public function update(UpdateProfileRequest $request)

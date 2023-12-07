@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Hash;
 use Excel;
+use DataTables;
 use App\Models\User;
 use App\Traits\SaveMedias;
 use App\Exports\UserExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use DataTables;
 
 
 class UserController extends Controller {
@@ -22,16 +23,16 @@ class UserController extends Controller {
             $data = User::select('*');
             return Datatables::of($data)
                 ->addColumn('action', function ($user) {
-                    return view('admin.buttons', compact('user'));
+                    return view('admin.user-actions', compact('user'));
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('admin.datatables-users');
+        return view('admin.user-datatable');
     }
     public function create() {
 
-        return view('admin.add');
+        return view('admin.user-create');
     }
     public function store(SaveUserRequest $request) {
         $file = $request->image;
@@ -58,7 +59,7 @@ class UserController extends Controller {
         return redirect()->route('dashboard')->with('success', 'User Added Successfully');
     }
     public function edit(User $user) {
-        return view('admin.update', compact('user'));
+        return view('admin.user-edit', compact('user'));
     }
 
     public function update(UpdateUserRequest $request, User $user) {

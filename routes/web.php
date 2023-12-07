@@ -1,20 +1,17 @@
 <?php
 
-
-use App\Http\Controllers\DatatableController;
+use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\ReactionController;
-use App\Http\Controllers\ReactionEventController;
-use App\Http\Controllers\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\User\PostController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\Authentication\LogoutController;
+use App\Http\Controllers\User\CommentController;
+use App\Http\Controllers\Authentication\RegisterController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DashboardPostController;
 use App\Http\Controllers\ChangeLanguageController;
 
 
@@ -68,7 +65,7 @@ Route::middleware('localizationmiddleware')->group(function () {
 
       Route::get('update/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-      Route::get('users/datatables', [UserController::class, 'index'])->name('users.datatables');
+      Route::get('users/datatable', [UserController::class, 'index'])->name('users.datatable');
 
     });
   });
@@ -79,9 +76,9 @@ Route::middleware('localizationmiddleware')->group(function () {
 
     Route::get('home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('edit', [UpdateProfileController::class, 'edit'])->name('edit');
+    Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
 
-    Route::put('update/profile', [UpdateProfileController::class, 'update'])->name('update.profile');
+    Route::put('update/profile', [ProfileController::class, 'update'])->name('update.profile');
 
     Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 

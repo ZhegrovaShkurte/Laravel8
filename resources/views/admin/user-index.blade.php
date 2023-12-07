@@ -1,4 +1,4 @@
-@extends('home\db')
+@extends('pages\db')
 @section('db')
 
 <h6>@lang('auth.data')</h6>

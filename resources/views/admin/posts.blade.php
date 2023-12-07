@@ -1,10 +1,9 @@
-@extends('home\db')
+@extends('pages\db')
 @section('db')
 
 <br>
 <h6>Data related for Posts</h6>
 <br>
-
 
 <table class="table">
     <tr>

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 
+use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Traits\SaveMedias;
 use Illuminate\Support\Facades\DB;
@@ -13,8 +14,6 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostController extends Controller
 {
-
-
     use SaveMedias;
     /**
      * Display a listing of the resource.
@@ -24,7 +23,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->with('comments', 'media', 'user', 'comments.replies')->get();
-        return view('blog.index', compact('posts'));
+        return view('user.post-index', compact('posts'));
     }
 
     /**
@@ -34,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('blog.create');
+        return view('user.post-create');
     }
 
     /**
@@ -82,7 +81,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $posts = Post::with('comments', 'media', 'user', 'comments.replies')->find($post->id);
-        return view('blog.show')->with('post', $posts);
+        return view('user.post-show')->with('post', $posts);
     }
 
     /**
@@ -93,7 +92,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('blog.edit')->with('post', $post);
+        return view('user.post-edit')->with('post', $post);
     }
 
     /**

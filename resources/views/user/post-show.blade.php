@@ -17,7 +17,7 @@
 </article>
 <h4 class="fw-bolder"> Display Comments </h4>
 
-@include('blog.comments', ['comments' => $post->comments, 'post_id' => $post->id])
+@include('user.post-comments', ['comments' => $post->comments, 'post_id' => $post->id])
 
 <hr />
 <h4>Add comment</h4>

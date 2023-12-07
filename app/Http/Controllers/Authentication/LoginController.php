@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Authentication;
 
-use App\Http\Requests\LoginRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Hash;
+use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
