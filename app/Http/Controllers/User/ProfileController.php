@@ -16,7 +16,9 @@ class ProfileController extends Controller
     public function update(UpdateProfileRequest $request)
     {
         try {
-            auth()->user()->update($request->validated());
+            $validated = $request->validated();
+
+            auth()->user()->update($validated);
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
