@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('original_name');
             $table->string('size');
             $table->foreignId('user_id');
-
-
         });
     }
 
